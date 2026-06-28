@@ -1,0 +1,6 @@
+- id: tabayyan
+  name: tabayyan (Saudi PII scan)
+  description: Fail the commit if Saudi/PII entities are found in staged text.
+  entry: tabayyan scan --fail-on-find
+  language: python
+  types: [text]

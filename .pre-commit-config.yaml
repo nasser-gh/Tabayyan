@@ -1,0 +1,14 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.6.9
+    hooks:
+      - id: ruff
+  # Use Tabayyan itself to block accidental PII in commits:
+  - repo: local
+    hooks:
+      - id: tabayyan
+        name: tabayyan PII scan
+        entry: tabayyan scan --fail-on-find --min-confidence high
+        language: system
+        types: [text]
+        exclude: '^(tests/|benchmarks/|docs/)'

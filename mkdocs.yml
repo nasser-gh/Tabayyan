@@ -1,0 +1,18 @@
+site_name: Tabayyan
+site_description: Saudi-aware PII detection & redaction for LLM pipelines
+theme:
+  name: material
+  palette:
+    - scheme: default
+      primary: teal
+nav:
+  - Home: index.md
+  - Showcase: showcase.md
+  - CLI: cli.md
+  - Detectors: detectors.md
+  - Middleware & audit: middleware.md
+  - Presidio integration: presidio.md
+  - Configuration: config.md
+  - Benchmarks: benchmarks.md
+  - FAQ: faq.md
+  - Threat model: threat-model.md
