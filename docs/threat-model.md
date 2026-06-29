@@ -9,6 +9,13 @@
   pre-commit gates (`--fail-on-find`).
 - **Homograph / lookalike-domain phishing references.** Via the opt-in
   domain detector against a watchlist.
+- **Evasion of detection via invisible or look-alike characters.** An
+  offset-preserving normalization pre-pass (`normalize.py`) strips
+  zero-width/bidi format characters and folds Arabic-Indic, Persian and
+  fullwidth digits (plus NFKC compatibility forms) before detection, so a
+  zero-width space wedged into an ID or fullwidth digits no longer slip past.
+  Matches are projected back onto the original span, so redaction still
+  rewrites the real text (invisibles included).
 
 ## Trust boundaries
 
