@@ -1,6 +1,13 @@
 # Changelog
 
 ## Unreleased
+- **Provider adapters — one guard, every SDK:** new `Guard.wrap(client,
+  provider="auto")` gives a uniform `create(**kwargs)` entry point across LLM
+  SDKs, with built-in OpenAI/Azure and **Anthropic** adapters (Anthropic also
+  redacts the `system` prompt) and tokenize-restore on responses. Auto-detects
+  the provider by client shape; extend to any SDK via
+  `tabayyan.providers.register_adapter`. `guard_openai()` is now a deprecated
+  alias of `wrap(..., provider="openai")` (still works, warns).
 - **Anti-evasion normalization:** an offset-preserving pre-pass
   (`normalize.py`) now runs in the engine before detection — it strips
   zero-width/bidi format characters (Unicode Cf) and folds Arabic-Indic,

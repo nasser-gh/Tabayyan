@@ -7,6 +7,7 @@ from __future__ import annotations
 from .engine import DetectionEngine
 from .entities import Category, Confidence, EntityType, Match
 from .middleware import AuditLog, AuditRecord, Guard, ProtectResult, is_in_kingdom
+from .providers import ProviderAdapter, register_adapter, resolve_adapter
 from .redaction import RedactionItem, RedactionMode, RedactionResult, redact, restore
 
 __version__ = "0.5.1"
@@ -26,6 +27,9 @@ __all__ = [
     "AuditRecord",
     "ProtectResult",
     "is_in_kingdom",
+    "ProviderAdapter",
+    "register_adapter",
+    "resolve_adapter",
     "scan",
     "scan_and_redact",
     "__version__",

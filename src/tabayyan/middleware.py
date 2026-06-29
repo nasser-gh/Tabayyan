@@ -18,6 +18,7 @@ live, external endpoints (e.g. *.openai.azure.com) are flagged.
 from __future__ import annotations
 
 import json
+import warnings
 from dataclasses import asdict, dataclass, field
 from datetime import datetime, timezone
 from typing import Callable, Iterable, Sequence
@@ -224,9 +225,58 @@ class Guard:
                 safe.append(msg)
         return safe, audits, vault, blocked
 
+    # --- provider-agnostic wrapper: one guard, every SDK (duck-typed) ---
+    def wrap(self, client, provider: str = "auto", destination: str | None = None,
+             restore_response: bool = False):
+        """Wrap any LLM client behind the guard and return a uniform proxy.
+
+        The returned object exposes a single ``create(**kwargs)`` method that
+        works for every supported provider: it redacts PII in the request,
+        invokes the underlying client, and (in tokenize mode) restores tokens
+        in the response. The provider is auto-detected by client shape, or set
+        explicitly with ``provider="openai" | "anthropic" | <registered>``.
+
+        Built-in adapters cover OpenAI/Azure and Anthropic; add your own with
+        ``tabayyan.providers.register_adapter``. For zero magic, call
+        ``protect_messages(...)`` and your client yourself.
+
+        Limitations match the underlying SDK: with ``stream=True`` the request
+        is redacted but the streamed response is passed through (no restore).
+        """
+        from .providers import resolve_adapter
+
+        adapter = resolve_adapter(client, provider)
+        guard = self
+
+        class _Wrapped:
+            provider_name = adapter.name
+
+            def create(self, **kwargs):
+                audits, vault, blocked = adapter.redact_request(guard, kwargs, destination)
+                if blocked:
+                    cats = sorted({c for a in audits for c in a.category_summary})
+                    cb = any(a.cross_border_transfer for a in audits)
+                    raise PermissionError(
+                        f"tabayyan Guard blocked a {'cross-border ' if cb else ''}"
+                        f"message containing {cats}"
+                    )
+                resp = adapter.invoke(client, kwargs)
+                if (restore_response and guard.mode is RedactionMode.TOKENIZE
+                        and not kwargs.get("stream")):
+                    adapter.restore_response(resp, vault)
+                return resp
+
+        return _Wrapped()
+
     # --- reference OpenAI/Azure adapter (duck-typed; imports nothing) ---
     def guard_openai(self, client, destination: str | None = None, restore_response: bool = False):
-        """REFERENCE adapter for an OpenAI-style client. Duck-typed.
+        """DEPRECATED: use ``wrap(client, provider="openai", ...)`` instead.
+
+        Kept as a thin, backward-compatible OpenAI-style proxy exposing
+        ``.chat.completions.create``. New code should prefer ``wrap()``, which
+        is provider-agnostic.
+
+        REFERENCE adapter for an OpenAI-style client. Duck-typed.
 
         IMPORTANT: this is a thin reference wrapper validated against common
         message *shapes*, NOT against a live OpenAI/Azure SDK. For production,
@@ -239,6 +289,11 @@ class Guard:
 
         `client` must expose `.chat.completions.create(model, messages, ...)`.
         """
+        warnings.warn(
+            "Guard.guard_openai() is deprecated; use Guard.wrap(client, "
+            "provider='openai', ...) instead.",
+            DeprecationWarning, stacklevel=2,
+        )
         guard = self
 
         class _Completions:
