@@ -1,5 +1,21 @@
 # Changelog
 
+## Unreleased
+- **Security:** `hash` redaction now uses HMAC-SHA256 (keyed) instead of a
+  bare `salt||value` digest, and **requires a non-empty salt**. Short
+  identifiers (e.g. a 10-digit National ID) were otherwise reversible by
+  brute force from the token. CLI exits with a clear error if `--salt` is
+  missing in hash mode.
+- **Security:** `Guard.protect()` no longer returns the raw original text on a
+  blocked call — the returned `text` is MASK-redacted so a caller that
+  mistakenly forwards it cannot leak PII.
+- **Fix:** audit `timestamp` is now a timezone-aware UTC ISO-8601 value
+  (`datetime.now(timezone.utc)`); removed dead `%z`-fallback code.
+- **Detection:** Saudi mobile detector now also matches the `00966`
+  international prefix.
+- Corrected the engine's overlap-resolution complexity note (worst case is
+  O(n²) via list.insert, not O(n log n)).
+
 ## 0.5.1
 - **Fix:** Arabic comma (U+060C) and other Arabic punctuation no longer
   corrupt Arabic-name tokenization (tightened the letter range).

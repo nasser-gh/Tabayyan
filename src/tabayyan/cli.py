@@ -110,6 +110,13 @@ def _cmd_scan(args) -> int:
 def _cmd_redact(args) -> int:
     engine = _engine_from_args(args)
     mode = RedactionMode(args.mode)
+    if mode is RedactionMode.HASH and not args.salt:
+        print(
+            "error: --mode hash requires a non-empty --salt (used as the HMAC key); "
+            "an empty key leaves short identifiers reversible by brute force.",
+            file=sys.stderr,
+        )
+        return 2
     found_any = False
     inputs = list(_iter_inputs(args.paths))
     multi = len(inputs) > 1
@@ -195,7 +202,7 @@ def build_parser() -> argparse.ArgumentParser:
     pr = sub.add_parser("redact", help="detect and redact")
     _add_common_filters(pr)
     pr.add_argument("--mode", choices=[m.value for m in RedactionMode], default="mask")
-    pr.add_argument("--salt", default="", help="salt for hash mode")
+    pr.add_argument("--salt", default="", help="HMAC key for hash mode (required, non-empty)")
     pr.add_argument("--hash-length", type=int, default=12, help="hash token length")
     pr.add_argument("--keep-last", type=int, default=4, help="kept chars in partial mode")
     pr.set_defaults(func=_cmd_redact)

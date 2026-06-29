@@ -48,6 +48,15 @@ def test_block_on_category():
     assert pr.audit.action == "block"
 
 
+def test_block_does_not_leak_raw_pii_in_text():
+    nid = make_national_id(random.Random(921), "1")
+    g = Guard(block_categories=[Category.NATIONAL_IDENTIFIER])
+    pr = g.protect(f"ID {nid}", destination=AZURE)
+    # Even though the call is blocked, the returned text must not carry the
+    # raw identifier — a caller that mistakenly forwards it cannot leak PII.
+    assert nid not in pr.text
+
+
 def test_block_cross_border_personal_data():
     nid = make_national_id(random.Random(93), "1")
     g = Guard(block_cross_border=True)

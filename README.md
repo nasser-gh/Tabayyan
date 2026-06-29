@@ -85,12 +85,15 @@ Filters: `--min-confidence {low,medium,high}`, `--only TYPE...`, `--exclude TYPE
 |------|--------------------------|----------|
 | `mask` | `[SAUDI_NATIONAL_ID]` | default; keeps text readable |
 | `remove` | *(deleted)* | strip entirely |
-| `hash` | `[HASH:f999c93a6934]` | deterministic, irreversible; correlate without exposing |
+| `hash` | `[HASH:f999c93a6934]` | keyed (HMAC), deterministic; correlate without exposing |
 | `partial` | `******8153` | keep last N for debugging |
 
-`hash` is deterministic per `--salt`: the same value maps to the same token,
-so you can correlate occurrences without revealing the value. Change the salt
-to break correlation across datasets.
+`hash` is HMAC-SHA256 keyed by `--salt` and **requires a non-empty salt** — a
+bare digest of a 10-digit identifier is reversible by brute force, so the key
+is what makes the token non-reversible. The same value maps to the same token
+under a given salt, so you can correlate occurrences without revealing the
+value; change the salt to break correlation across datasets. Treat `hash`
+output as pseudonymous, not anonymous.
 
 In code:
 

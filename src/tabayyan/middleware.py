@@ -18,8 +18,8 @@ live, external endpoints (e.g. *.openai.azure.com) are flagged.
 from __future__ import annotations
 
 import json
-import time
 from dataclasses import asdict, dataclass, field
+from datetime import datetime, timezone
 from typing import Callable, Iterable, Sequence
 from urllib.parse import urlparse
 
@@ -146,7 +146,11 @@ class Guard:
 
         vault: dict = {}
         if block:
-            out_text = text  # caller must not forward; we still return original for logging context
+            # Blocked means "do not forward". We still hand back text for logging
+            # context, but it is MASK-redacted, never the raw original: a caller
+            # that mistakenly forwards `result.text` must not leak PII. MASK is
+            # used regardless of self.mode so this path never needs a salt.
+            out_text = redact(text, matches, RedactionMode.MASK).text if matches else text
             action = "block"
             redacted = False
         elif matches:
@@ -161,7 +165,7 @@ class Guard:
             redacted = False
 
         rec = AuditRecord(
-            timestamp=time.strftime("%Y-%m-%dT%H:%M:%S%z") or time.strftime("%Y-%m-%dT%H:%M:%S"),
+            timestamp=datetime.now(timezone.utc).isoformat(),
             destination=destination,
             destination_host=host_of(destination),
             in_kingdom=in_kingdom,
