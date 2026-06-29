@@ -1,4 +1,4 @@
-# تبيّن · Tabayyan
+Tabayyan
 
 **Saudi-aware PII detection & redaction for LLM pipelines. Local-first, zero telemetry.**
 
