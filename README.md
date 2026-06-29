@@ -9,7 +9,8 @@ Tabayyan
 
 Generic PII scanners are built around Western identifiers and miss Saudi ones —
 or flag them with no validation. **Tabayyan** detects Saudi-specific personal
-data (National ID, Iqama, Saudi IBAN, CR, `+966` mobile, medical record numbers)
+data (National ID, Iqama, Saudi IBAN, CR, VAT, `+966` mobile & landline, passport,
+border/visa, National Address, unified 700 number, medical record numbers)
 with real checksum validation, then tags each finding by data category and
 confidence so you can redact or block before text leaves your environment for an
 LLM endpoint.

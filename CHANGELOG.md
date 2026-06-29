@@ -1,6 +1,12 @@
 # Changelog
 
 ## Unreleased
+- **New Saudi entities:** landline (`+966 1X`), VAT/tax number (ZATCA TRN,
+  context-gated), passport, border/visa number, National Address short code,
+  and unified establishment number (700) — each format-only and, where
+  ambiguous, gated on a keyword context like CR/MRN. Presidio recognizers
+  (`SA_VAT`, `SA_PASSPORT`, `SA_BORDER_NUMBER`, `SA_NATIONAL_ADDRESS`,
+  `SA_UNIFIED_NUMBER`) added alongside.
 - **Security:** `hash` redaction now uses HMAC-SHA256 (keyed) instead of a
   bare `salt||value` digest, and **requires a non-empty salt**. Short
   identifiers (e.g. a 10-digit National ID) were otherwise reversible by

@@ -40,3 +40,33 @@ def make_mobile(rng: random.Random, fmt: str = "+966") -> str:
     if fmt == "966":
         return "9665" + rest
     return "05" + rest
+
+
+def make_landline(rng: random.Random, fmt: str = "0") -> str:
+    area = str(rng.randint(1, 7))
+    rest = "".join(str(rng.randint(0, 9)) for _ in range(7))
+    body = "1" + area + rest
+    if fmt == "+966":
+        return "+966" + body
+    if fmt == "966":
+        return "966" + body
+    return "0" + body
+
+
+def make_vat(rng: random.Random) -> str:
+    # 15-digit ZATCA-style TRN (structural only; no public checksum)
+    return "3" + "".join(str(rng.randint(0, 9)) for _ in range(13)) + "3"
+
+
+def make_unified_number(rng: random.Random) -> str:
+    return "7" + "".join(str(rng.randint(0, 9)) for _ in range(9))
+
+
+def make_passport(rng: random.Random) -> str:
+    letter = chr(rng.randint(ord("A"), ord("Z")))
+    return letter + "".join(str(rng.randint(0, 9)) for _ in range(8))
+
+
+def make_national_address(rng: random.Random) -> str:
+    letters = "".join(chr(rng.randint(ord("A"), ord("Z"))) for _ in range(4))
+    return letters + "".join(str(rng.randint(0, 9)) for _ in range(4))
