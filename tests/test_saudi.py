@@ -133,6 +133,14 @@ def test_unified_number_requires_context():
     assert EntityType.SAUDI_UNIFIED_NUMBER not in _types(engine.scan(f"qty {num}"))
 
 
+def test_unified_number_700_substring_does_not_self_trigger():
+    # a value containing "700" as a digit substring must not satisfy its own
+    # context gate (the \b700\b trigger is for the colloquial "700 number")
+    assert EntityType.SAUDI_UNIFIED_NUMBER not in _types(engine.scan("ref 7001234567 filed"))
+    # but the standalone phrase still triggers
+    assert EntityType.SAUDI_UNIFIED_NUMBER in _types(engine.scan("700 number 7234567890"))
+
+
 def test_arabic_indic_digits_in_new_entities():
     vat = make_vat(random.Random(207))
     arabic = vat.translate(str.maketrans("0123456789", "٠١٢٣٤٥٦٧٨٩"))

@@ -239,7 +239,9 @@ class SaudiUnifiedNumberDetector(Detector):
     """Unified national number for establishments (700 number): starts with 7,
     10 digits. Context-gated (LOW)."""
     name = "saudi_unified_number"
-    _context = re.compile(r"(?:unified\s*(?:national\s*)?number|الرقم\s*الموحد|700)", re.IGNORECASE)
+    # \b700\b matches the colloquial "700 number" but NOT a "700" that is just
+    # a digit run inside the candidate itself (which would self-trigger).
+    _context = re.compile(r"(?:unified\s*(?:national\s*)?number|الرقم\s*الموحد|\b700\b)", re.IGNORECASE)
     _number = re.compile(r"(?<!\d)(7\d{9})(?!\d)")
 
     def detect(self, text: str) -> Iterable[Match]:

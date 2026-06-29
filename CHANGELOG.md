@@ -1,6 +1,14 @@
 # Changelog
 
 ## Unreleased
+- **Benchmark expansion:** `benchmarks/run.py` now measures the new Saudi
+  entities (landline, VAT, passport, border, National Address, unified 700),
+  each with hard negatives that probe the keyword-context gate (valid format,
+  no context → must not match), plus a new **evasion-robustness** section
+  reporting recall on zero-width / Arabic-Indic / fullwidth-obfuscated
+  identifiers with normalization on vs off. The expanded run surfaced and fixed
+  a real precision leak: the unified-number `700` context trigger now uses
+  `\b700\b` so a `700` digit-substring inside a candidate no longer self-gates.
 - **Encrypted vault:** the tokenize vault (token → original — the reversal
   key) can now be persisted password-encrypted via `tabayyan.vault`
   (`save_vault`/`load_vault`, `encrypt_vault`/`decrypt_vault`). Uses the vetted
