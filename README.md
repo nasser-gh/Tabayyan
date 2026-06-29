@@ -16,12 +16,6 @@ LLM endpoint.
 
 It runs **fully offline**: no network calls, no telemetry, no external
 dependencies in the detection core.
-
-> **تبيّن** أداة للكشف عن البيانات الشخصية الحساسة في النصوص قبل إرسالها إلى نماذج
-> اللغة (LLM). تركّز على المعرّفات السعودية (الهوية الوطنية، الإقامة، الآيبان
-> السعودي، السجل التجاري، الجوال، رقم الملف الطبي) مع تحقّق فعلي من checksum.
-> تعمل **محلياً بالكامل** — بدون أي اتصال خارجي أو telemetry.
-
 ---
 
 ## Why it's different
