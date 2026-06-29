@@ -22,8 +22,10 @@
 - The detection core runs **inside your trust boundary** and stays there:
   no network egress, no telemetry.
 - In **tokenize** mode the vault (token → original) is sensitive: it is the
-  reversal key. Store it with the same controls as the original data.
-  Treat `hash` output as pseudonymous, not anonymous.
+  reversal key. Store it with the same controls as the original data —
+  `tabayyan.vault.save_vault()` persists it password-encrypted (Fernet +
+  PBKDF2-HMAC-SHA256, via the `tabayyan[crypto]` extra) so it is not a
+  plaintext dict at rest. Treat `hash` output as pseudonymous, not anonymous.
 - A `--config` file can add custom regex detectors and extend confusables.
   Treat config as code: a malicious pattern is a denial-of-service risk
   (catastrophic backtracking). Review configs from untrusted sources.
