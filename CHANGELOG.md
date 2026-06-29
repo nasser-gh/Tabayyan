@@ -1,6 +1,13 @@
 # Changelog
 
 ## Unreleased
+- **Encrypted vault:** the tokenize vault (token → original — the reversal
+  key) can now be persisted password-encrypted via `tabayyan.vault`
+  (`save_vault`/`load_vault`, `encrypt_vault`/`decrypt_vault`). Uses the vetted
+  `cryptography` library (Fernet + PBKDF2-HMAC-SHA256, 600k iterations) — no
+  home-rolled crypto — behind the optional `tabayyan[crypto]` extra, so the
+  detection core stays zero-dependency. Files are written `0600`; wrong
+  password or tampering raises a clear error.
 - **NDMO data classification:** every audit record now carries
   `data_classification` (the highest NDMO sensitivity level among detected
   entities — health → secret, most PII → confidential, org/network → public)

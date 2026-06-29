@@ -10,6 +10,7 @@ from .middleware import AuditLog, AuditRecord, Guard, ProtectResult, is_in_kingd
 from .ndmo import Classification, classification_summary, classify
 from .providers import ProviderAdapter, register_adapter, resolve_adapter
 from .redaction import RedactionItem, RedactionMode, RedactionResult, redact, restore
+from .vault import decrypt_vault, encrypt_vault, load_vault, save_vault
 
 __version__ = "0.5.1"
 __all__ = [
@@ -34,6 +35,10 @@ __all__ = [
     "Classification",
     "classify",
     "classification_summary",
+    "encrypt_vault",
+    "decrypt_vault",
+    "save_vault",
+    "load_vault",
     "scan",
     "scan_and_redact",
     "__version__",
