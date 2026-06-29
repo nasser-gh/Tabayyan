@@ -1,10 +1,15 @@
 """Detection engine: runs detectors and resolves overlaps. Offline, deterministic.
 
-Overlap resolution is O(n log n): matches are ranked (confidence desc, then
-length desc, then position), and each is accepted only if it does not
-overlap an already-kept interval. Kept intervals are disjoint and held
-sorted by start, so an overlap check is two bisect lookups, not a linear
-scan — critical on dense inputs.
+Overlap resolution: matches are ranked (confidence desc, then length desc,
+then position), and each is accepted only if it does not overlap an
+already-kept interval. Kept intervals are disjoint and held sorted by start,
+so each overlap *check* is two bisect lookups rather than a linear scan.
+
+Complexity: the initial sort is O(n log n); maintaining the sorted kept-set
+uses list.insert, which is O(n) per accept, so the worst case is O(n²) for
+pathologically dense inputs. In practice n (matches per prompt) is small and
+the bisect checks dominate. A SortedList would make it true O(n log n) but
+pulls in a dependency we keep out of the detection core.
 """
 from __future__ import annotations
 

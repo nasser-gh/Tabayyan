@@ -53,7 +53,7 @@ class SaudiIbanDetector(Detector):
 
 class SaudiMobileDetector(Detector):
     name = "saudi_mobile"
-    _pattern = re.compile(r"(?<!\d)(?:(?:\+?966)|0)5\d{8}(?!\d)")
+    _pattern = re.compile(r"(?<!\d)(?:(?:00|\+)?966|0)5\d{8}(?!\d)")
 
     def detect(self, text: str) -> Iterable[Match]:
         norm = _normalise_digits(text)

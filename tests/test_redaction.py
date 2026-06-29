@@ -42,6 +42,15 @@ def test_hash_salt_changes_token():
     assert a != b
 
 
+def test_hash_requires_non_empty_salt():
+    nid = make_national_id(random.Random(431), "1")
+    import pytest
+    with pytest.raises(ValueError):
+        scan_and_redact(f"x {nid}", "hash")           # empty default salt
+    with pytest.raises(ValueError):
+        scan_and_redact(f"x {nid}", "hash", salt="")  # explicit empty salt
+
+
 def test_partial_keeps_last_n():
     nid = make_national_id(random.Random(44), "1")
     result = scan_and_redact(f"id {nid}", "partial", partial_keep_last=4)

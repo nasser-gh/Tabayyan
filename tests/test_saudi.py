@@ -48,6 +48,12 @@ def test_mobile_formats():
         assert EntityType.SAUDI_MOBILE in _types(engine.scan(f"call {make_mobile(rng, fmt)} now"))
 
 
+def test_mobile_international_00966_prefix():
+    rng = random.Random(115)
+    intl = "00966" + make_mobile(rng, "966")[3:]  # 00966 5XXXXXXXX
+    assert EntityType.SAUDI_MOBILE in _types(engine.scan(f"call {intl} now"))
+
+
 def test_arabic_indic_digits_in_national_id():
     nid = make_national_id(random.Random(16), "1")
     arabic = nid.translate(str.maketrans("0123456789", "٠١٢٣٤٥٦٧٨٩"))

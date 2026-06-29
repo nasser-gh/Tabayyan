@@ -10,6 +10,7 @@ spans are rewritten first.
 from __future__ import annotations
 
 import hashlib
+import hmac
 from dataclasses import dataclass, field
 from enum import Enum
 from typing import Sequence
@@ -56,7 +57,11 @@ class RedactionResult:
 
 
 def _hash_token(value: str, salt: str, length: int) -> str:
-    digest = hashlib.sha256((salt + value).encode("utf-8")).hexdigest()
+    # HMAC (keyed) rather than a bare salt||value digest: the identifiers we
+    # hash (e.g. a 10-digit National ID) live in a space small enough to
+    # brute-force from the output. A secret key is what makes the token
+    # non-reversible; the empty-key case is rejected by `redact()`.
+    digest = hmac.new(salt.encode("utf-8"), value.encode("utf-8"), hashlib.sha256).hexdigest()
     return f"[HASH:{digest[:length]}]"
 
 
@@ -100,8 +105,17 @@ def redact(
 
     `matches` need not be sorted; overlapping matches should already be
     resolved by the engine, but any residual overlap is skipped defensively.
+
+    HASH mode requires a non-empty `salt` (used as the HMAC key). Without it
+    the tokens are trivially reversible by brute force for low-entropy
+    identifiers, so an empty salt is rejected rather than silently insecure.
     """
     mode = RedactionMode(mode)
+    if mode is RedactionMode.HASH and not salt:
+        raise ValueError(
+            "HASH redaction requires a non-empty salt (used as the HMAC key); "
+            "an empty key leaves short identifiers reversible by brute force."
+        )
     ordered = sorted(matches, key=lambda m: m.start)
 
     # Defensive overlap guard (engine normally resolves these already).
