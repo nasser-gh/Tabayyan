@@ -163,7 +163,7 @@ collapses without it. Full tables in [benchmarks/RESULTS.md](benchmarks/RESULTS.
 Validators are independently cross-checked: National ID against
 [alhazmy13/Saudi-ID-Validator](https://github.com/alhazmy13/Saudi-ID-Validator),
 and IBAN + Luhn against python-stdnum plus official card-network test PANs.
-See [REFERENCES.md](REFERENCES.md).
+See [REFERENCES.md](docs/REFERENCES.md).
 
 ## Docker & pre-commit
 
@@ -262,7 +262,7 @@ tabayyan scan note.txt --config my-config.json
 
 See [docs/config.md](docs/config.md), [docs/faq.md](docs/faq.md),
 [docs/threat-model.md](docs/threat-model.md), and
-[REFERENCES.md](REFERENCES.md) for algorithm provenance.
+[REFERENCES.md](docs/REFERENCES.md) for algorithm provenance.
 
 ## Scope and honest limits
 
@@ -273,7 +273,7 @@ Tabayyan is a **detection aid, not a compliance guarantee**.
 - The **National ID** validator uses the de-facto community Luhn variant,
   cross-validated against an independent reference (100% agreement on 50k+
   samples) but **not** an authoritative government spec. Confirm before
-  production reliance (see REFERENCES.md).
+  production reliance (see docs/REFERENCES.md).
 - **Arabic name** detection is a heuristic, not ML NER: recall is limited
   by design to protect precision.
 - **CR** has no public checksum; detection is format + keyword context only.
@@ -295,7 +295,7 @@ Tabayyan is a **detection aid, not a compliance guarantee**.
 
 ## Contributing
 
-See [CONTRIBUTING.md](CONTRIBUTING.md). One hard rule: **synthetic data only —
+See [CONTRIBUTING.md](.github/CONTRIBUTING.md). One hard rule: **synthetic data only —
 never** commit real personal data.
 
 ## License
