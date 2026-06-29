@@ -155,6 +155,11 @@ checksum validation removes the entire decoy class:
 against their design assumptions, not real-world traffic — see the honest
 caveat below.)*
 
+The run also reports an **evasion-robustness** section: recall on identifiers
+hidden behind zero-width, Arabic-Indic, or fullwidth characters, with the
+normalization pre-pass on vs off — recall stays `1.000` normalized and
+collapses without it. Full tables in [benchmarks/RESULTS.md](benchmarks/RESULTS.md).
+
 Validators are independently cross-checked: National ID against
 [alhazmy13/Saudi-ID-Validator](https://github.com/alhazmy13/Saudi-ID-Validator),
 and IBAN + Luhn against python-stdnum plus official card-network test PANs.
