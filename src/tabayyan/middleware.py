@@ -26,6 +26,7 @@ from urllib.parse import urlparse
 
 from .engine import DetectionEngine
 from .entities import Category, Match
+from .ndmo import classification_summary, classify
 from .redaction import RedactionMode, RedactionResult, redact, restore
 
 _PERSONAL_CATEGORIES = {
@@ -70,6 +71,8 @@ class AuditRecord:
     category_summary: dict          # category -> count
     redacted: bool
     blocked: bool
+    data_classification: str | None = None   # highest NDMO level present
+    classification_summary: dict = field(default_factory=dict)  # level -> count
     values: list | None = None      # raw values, only if explicitly enabled
 
     def to_json(self) -> str:
@@ -178,6 +181,8 @@ class Guard:
             category_summary=_count(m.category.value for m in matches),
             redacted=redacted,
             blocked=block,
+            data_classification=(c.value if (c := classify(matches)) else None),
+            classification_summary=classification_summary(matches),
             values=[m.value for m in matches] if self.record_values else None,
         )
         if self.audit:

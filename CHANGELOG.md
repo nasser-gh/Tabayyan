@@ -1,6 +1,13 @@
 # Changelog
 
 ## Unreleased
+- **NDMO data classification:** every audit record now carries
+  `data_classification` (the highest NDMO sensitivity level among detected
+  entities — health → secret, most PII → confidential, org/network → public)
+  and a `classification_summary` (level → count). New `tabayyan.ndmo` module
+  with `Classification`, `classify()`, `classification_summary()`, and an
+  overridable `CATEGORY_CLASSIFICATION` map. Complements the PDPL cross-border
+  evidence trail.
 - **Provider adapters — one guard, every SDK:** new `Guard.wrap(client,
   provider="auto")` gives a uniform `create(**kwargs)` entry point across LLM
   SDKs, with built-in OpenAI/Azure and **Anthropic** adapters (Anthropic also

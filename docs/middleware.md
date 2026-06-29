@@ -87,7 +87,24 @@ For zero magic, the fully provider-agnostic building block is
 > `guard_openai()` is **deprecated** in favour of `wrap(client, provider="openai")`;
 > it still works (and emits a `DeprecationWarning`).
 
+## NDMO data classification
+
+Every audit record carries `data_classification` — the highest NDMO sensitivity
+level among the detected entities — plus a `classification_summary` (level →
+count). Health data classifies as **secret**, most PII (IDs, financial,
+contact, names) as **confidential**, and org/network identifiers as **public**.
+
+```python
+pr = guard.protect("MRN: A1234, ID 1158813996", destination="...")
+pr.audit.data_classification   # "secret"  (health outranks the ID)
+pr.audit.classification_summary  # {"secret": 1, "confidential": 1}
+```
+
+The mapping is a practical default — override `tabayyan.ndmo.CATEGORY_CLASSIFICATION`
+to match your own data-classification matrix. Use it directly without the
+middleware via `tabayyan.classify(matches)` / `classification_summary(matches)`.
+
 ## Audit privacy
 
 Raw values are **not** written to the audit by default (`record_values=False`).
-The audit captures counts and categories, not the data itself.
+The audit captures counts, categories, and classification — not the data itself.

@@ -7,6 +7,7 @@ from __future__ import annotations
 from .engine import DetectionEngine
 from .entities import Category, Confidence, EntityType, Match
 from .middleware import AuditLog, AuditRecord, Guard, ProtectResult, is_in_kingdom
+from .ndmo import Classification, classification_summary, classify
 from .providers import ProviderAdapter, register_adapter, resolve_adapter
 from .redaction import RedactionItem, RedactionMode, RedactionResult, redact, restore
 
@@ -30,6 +31,9 @@ __all__ = [
     "ProviderAdapter",
     "register_adapter",
     "resolve_adapter",
+    "Classification",
+    "classify",
+    "classification_summary",
     "scan",
     "scan_and_redact",
     "__version__",
