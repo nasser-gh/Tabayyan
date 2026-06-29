@@ -42,16 +42,50 @@ guard = Guard(block_cross_border=True)                       # block any cross-b
 guard = Guard(block_categories=[Category.SENSITIVE_HEALTH])  # block health data outright
 ```
 
-## Wrapping an OpenAI / Azure client
+## Wrapping any LLM client — one guard, every SDK
+
+`Guard.wrap()` returns a uniform proxy with a single `create(**kwargs)` method.
+The provider is auto-detected from the client's shape, or set explicitly. PII
+in the request (messages **and**, for Anthropic, the `system` prompt) is
+redacted before the call.
 
 ```python
-client = OpenAI(...)                       # your real client
-safe = guard.guard_openai(client, destination="https://contoso.openai.azure.com")
-safe.chat.completions.create(model="gpt-4o", messages=[...])  # prompts redacted first
+# OpenAI / Azure (auto-detected)
+gpt = guard.wrap(OpenAI(...), destination="https://contoso.openai.azure.com")
+gpt.create(model="gpt-4o", messages=[...])
+
+# Anthropic / Claude (auto-detected)
+claude = guard.wrap(Anthropic(...))
+claude.create(model="claude-sonnet-4-6", system="...", messages=[...])
+
+# Force a provider, or wrap a custom SDK you registered
+client = guard.wrap(my_client, provider="anthropic")
+```
+
+Built-in adapters cover OpenAI/Azure and Anthropic. Teach it a new SDK with
+`register_adapter`:
+
+```python
+from tabayyan import register_adapter
+
+class MyAdapter:
+    name = "myllm"
+    def matches(self, client): ...
+    def redact_request(self, guard, kwargs, destination): ...   # returns (audits, vault, blocked)
+    def invoke(self, client, kwargs): ...
+    def restore_response(self, resp, vault): ...
+
+register_adapter(MyAdapter())
 ```
 
 With `RedactionMode.TOKENIZE` and `restore_response=True`, the wrapper restores
 original values in the model's reply so personalization survives.
+
+For zero magic, the fully provider-agnostic building block is
+`guard.protect_messages(messages)` — redact, then call your client yourself.
+
+> `guard_openai()` is **deprecated** in favour of `wrap(client, provider="openai")`;
+> it still works (and emits a `DeprecationWarning`).
 
 ## Audit privacy
 
