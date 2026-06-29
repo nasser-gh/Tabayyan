@@ -290,8 +290,9 @@ Tabayyan is a **detection aid, not a compliance guarantee**.
 - **v0.2** — redaction modes (mask/remove/hash/partial) + CLI.
 - **v0.3** — homoglyph/lookalike-domain detection, benchmark suite, Docker / pre-commit / PyPI / docs.
 - **v0.4** — Arabic name detection, streaming large files, reversible tokenize redaction, JSON config + custom detectors, O(n log n) engine, references + FAQ + threat-model docs.
-- **v0.5** *(current)* — middleware + audit (cross-border flagging) and Presidio integration (validated Saudi recognizers).
-- Optional prompt-injection heuristics (isolated module).
+- **v0.5** — middleware + audit (cross-border flagging) and Presidio integration (validated Saudi recognizers).
+- **v0.6** *(current)* — six new Saudi entities (VAT, landline, passport, border/visa, National Address, unified 700); offset-preserving anti-evasion normalization; provider-agnostic adapter layer (OpenAI + Anthropic); NDMO data classification in the audit; password-encrypted tokenize vault; expanded precision/recall + evasion-robustness benchmarks; and security hardening (HMAC-keyed hash, block-path leak fix, timezone-aware audit timestamps).
+- **Next** — optional Arabic NER (extra), and optional prompt-injection heuristics (isolated module).
 
 ## Contributing
 
