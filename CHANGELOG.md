@@ -1,6 +1,14 @@
 # Changelog
 
 ## Unreleased
+- **Anti-evasion normalization:** an offset-preserving pre-pass
+  (`normalize.py`) now runs in the engine before detection — it strips
+  zero-width/bidi format characters (Unicode Cf) and folds Arabic-Indic,
+  Persian and fullwidth digits (plus per-character NFKC) so evasion via
+  invisible or look-alike characters is defeated for **all** detectors, not
+  just the Saudi ones. Matches are projected back onto original offsets, so
+  redaction still rewrites the real span (invisibles included). Pure-ASCII
+  input is unchanged. Opt out with `DetectionEngine(normalize_input=False)`.
 - **New Saudi entities:** landline (`+966 1X`), VAT/tax number (ZATCA TRN,
   context-gated), passport, border/visa number, National Address short code,
   and unified establishment number (700) — each format-only and, where
