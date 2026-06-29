@@ -33,9 +33,9 @@ dependencies in the detection core.
 
 ## Status
 
-Initial public release (v0.5.1). The pre-1.0 version numbers (0.1–0.5) track
-internal development milestones, not separate public releases — the CHANGELOG
-documents each. Expect the API to stabilise toward 1.0.
+Public release (v0.6.0). The pre-1.0 version numbers track development
+milestones — the CHANGELOG documents each. Expect the API to stabilise
+toward 1.0.
 
 ## Install
 
@@ -192,8 +192,9 @@ pr.text                         # redacted before send
 pr.audit.cross_border_transfer  # True for external endpoints with personal data
 ```
 
-Wrap an OpenAI/Azure client directly with `guard.guard_openai(client,
-destination=...)`. See [docs/middleware.md](docs/middleware.md).
+Wrap **any** LLM client — OpenAI/Azure or Anthropic, auto-detected — with
+`guard.wrap(client, destination=...)`, then call `.create(...)`; PII is redacted
+before the request leaves. See [docs/middleware.md](docs/middleware.md).
 
 ## Use it inside Presidio
 

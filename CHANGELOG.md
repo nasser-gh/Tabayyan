@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.6.0
 - **Benchmark expansion:** `benchmarks/run.py` now measures the new Saudi
   entities (landline, VAT, passport, border, National Address, unified 700),
   each with hard negatives that probe the keyword-context gate (valid format,

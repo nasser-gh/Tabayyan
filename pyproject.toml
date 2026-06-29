@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "tabayyan"
-version = "0.5.1"
+version = "0.6.0"
 description = "Saudi-aware PII detection & redaction for LLM pipelines. Local-first, zero telemetry."
 readme = "README.md"
 requires-python = ">=3.9"
