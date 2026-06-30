@@ -15,7 +15,7 @@ from .providers import ProviderAdapter, register_adapter, resolve_adapter
 from .redaction import RedactionItem, RedactionMode, RedactionResult, redact, restore
 from .vault import decrypt_vault, encrypt_vault, load_vault, save_vault
 
-__version__ = "0.6.0"
+__version__ = "0.7.0"
 __all__ = [
     "DetectionEngine",
     "Match",
