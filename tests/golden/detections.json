@@ -1,0 +1,201 @@
+{
+  "version": 1,
+  "cases": [
+    {
+      "name": "national_id",
+      "text": "Patient national ID 1176749362 on file.",
+      "detections": [
+        {
+          "type": "saudi_national_id",
+          "value": "1176749362",
+          "start": 20,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "name": "iqama",
+      "text": "Iqama no 2536861566.",
+      "detections": [
+        {
+          "type": "saudi_iqama",
+          "value": "2536861566",
+          "start": 9,
+          "end": 19
+        }
+      ]
+    },
+    {
+      "name": "iban",
+      "text": "Salary IBAN SA2849850294284981540699.",
+      "detections": [
+        {
+          "type": "saudi_iban",
+          "value": "SA2849850294284981540699",
+          "start": 12,
+          "end": 36
+        }
+      ]
+    },
+    {
+      "name": "credit_card",
+      "text": "Card 3709744314239568 charged.",
+      "detections": [
+        {
+          "type": "credit_card",
+          "value": "3709744314239568",
+          "start": 5,
+          "end": 21
+        }
+      ]
+    },
+    {
+      "name": "mobile",
+      "text": "Call +966506424145 after 5pm.",
+      "detections": [
+        {
+          "type": "saudi_mobile",
+          "value": "+966506424145",
+          "start": 5,
+          "end": 18
+        }
+      ]
+    },
+    {
+      "name": "landline",
+      "text": "Office line 0140133696.",
+      "detections": [
+        {
+          "type": "saudi_landline",
+          "value": "0140133696",
+          "start": 12,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "name": "email_ip",
+      "text": "Mail a@b.example from 10.0.0.5 today.",
+      "detections": [
+        {
+          "type": "email",
+          "value": "a@b.example",
+          "start": 5,
+          "end": 16
+        },
+        {
+          "type": "ip_address",
+          "value": "10.0.0.5",
+          "start": 22,
+          "end": 30
+        }
+      ]
+    },
+    {
+      "name": "vat_context",
+      "text": "VAT no 376221586645323 on the invoice.",
+      "detections": [
+        {
+          "type": "saudi_vat",
+          "value": "376221586645323",
+          "start": 7,
+          "end": 22
+        }
+      ]
+    },
+    {
+      "name": "passport_context",
+      "text": "passport M84236982 expires soon.",
+      "detections": [
+        {
+          "type": "saudi_passport",
+          "value": "M84236982",
+          "start": 9,
+          "end": 18
+        }
+      ]
+    },
+    {
+      "name": "national_address_context",
+      "text": "national address TZOT5715.",
+      "detections": [
+        {
+          "type": "saudi_national_address",
+          "value": "TZOT5715",
+          "start": 17,
+          "end": 25
+        }
+      ]
+    },
+    {
+      "name": "unified_context",
+      "text": "الرقم الموحد 7683064574.",
+      "detections": [
+        {
+          "type": "saudi_unified_number",
+          "value": "7683064574",
+          "start": 13,
+          "end": 23
+        }
+      ]
+    },
+    {
+      "name": "mixed_record",
+      "text": "Name: patient; ID 1176749362; IBAN SA2849850294284981540699; phone +966506424145.",
+      "detections": [
+        {
+          "type": "saudi_national_id",
+          "value": "1176749362",
+          "start": 18,
+          "end": 28
+        },
+        {
+          "type": "saudi_iban",
+          "value": "SA2849850294284981540699",
+          "start": 35,
+          "end": 59
+        },
+        {
+          "type": "saudi_mobile",
+          "value": "+966506424145",
+          "start": 67,
+          "end": 80
+        }
+      ]
+    },
+    {
+      "name": "evasion_zero_width",
+      "text": "id 11767​49362 hidden",
+      "detections": [
+        {
+          "type": "saudi_national_id",
+          "value": "1176749362",
+          "start": 3,
+          "end": 14
+        }
+      ]
+    },
+    {
+      "name": "evasion_arabic_digits",
+      "text": "الهوية ١١٧٦٧٤٩٣٦٢",
+      "detections": [
+        {
+          "type": "saudi_national_id",
+          "value": "1176749362",
+          "start": 7,
+          "end": 17
+        }
+      ]
+    },
+    {
+      "name": "hard_negative_no_context_vat",
+      "text": "order 376221586645323 shipped",
+      "detections": []
+    },
+    {
+      "name": "clean",
+      "text": "The quarterly report is ready for review.",
+      "detections": []
+    }
+  ]
+}
