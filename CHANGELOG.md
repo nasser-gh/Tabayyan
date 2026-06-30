@@ -1,6 +1,17 @@
 # Changelog
 
 ## Unreleased
+- **Scheduled fuzzing:** a coverage-guided fuzz target (`fuzz/fuzz_pipeline.py`,
+  Atheris) drives the full pipeline — normalize → scan → redact — asserting the
+  same invariants as the property tests. It is meant to run **weekly and
+  non-blocking**, never on PRs; if Atheris can't be installed the job skips
+  rather than adding a fallback fuzzer, and slow inputs are observations, not
+  failures. The workflow ships as `fuzz/scheduled-fuzz.yml.example` — copy it to
+  `.github/workflows/` to enable. Ships a curated `fuzz/seeds/` corpus (zero-width,
+  bidi, mixed-script, Arabic-Indic/fullwidth digits, malformed UTF-8, long
+  numeric/whitespace runs, placeholder-collision), a dependency-free
+  `python -m fuzz.replay` repro tool, and a `test_fuzz_smoke.py` that runs the
+  invariants over the seeds in normal CI.
 - **Threat model expanded:** `docs/threat-model.md` now uses non-absolute
   wording ("substantially mitigated for supported rules"), separates upstream
   dependencies (OCR, PDF extraction) from out-of-scope concerns (prompt

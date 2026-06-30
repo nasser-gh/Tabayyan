@@ -1,0 +1,45 @@
+name: fuzz
+
+# Scheduled, non-blocking fuzzing — never runs on pull requests.
+on:
+  schedule:
+    - cron: "17 4 * * 1"   # weekly, Monday 04:17 UTC (off-peak minute)
+  workflow_dispatch: {}
+
+permissions:
+  contents: read
+
+jobs:
+  fuzz:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -e ".[dev]"
+
+      # Atheris is the only fuzzing dependency. If it can't be installed,
+      # skip the job rather than pulling in a fallback fuzzer.
+      - name: Install Atheris
+        id: atheris
+        run: |
+          if pip install atheris; then echo "ok=true" >> "$GITHUB_OUTPUT";
+          else echo "ok=false" >> "$GITHUB_OUTPUT"; echo "::notice::Atheris unavailable — skipping fuzz run."; fi
+
+      - name: Fuzz (bounded, non-blocking)
+        if: steps.atheris.outputs.ok == 'true'
+        run: |
+          mkdir -p fuzz/artifacts
+          # Slow inputs are observations, not failures: never fail the job.
+          python -m fuzz.fuzz_pipeline fuzz/seeds \
+            -max_total_time=180 -timeout=25 \
+            -artifact_prefix=fuzz/artifacts/ || true
+
+      - name: Upload crash corpus (if any)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: fuzz-artifacts
+          path: fuzz/artifacts/
+          if-no-files-found: ignore
