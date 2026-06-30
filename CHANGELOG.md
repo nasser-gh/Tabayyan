@@ -1,6 +1,10 @@
 # Changelog
 
 ## Unreleased
+- **Docs consistency:** the README performance section and roadmap no longer
+  claim the overlap resolver is O(n log n); they now match the engine docstring
+  (sort is O(n log n), worst case O(n²) via `list.insert`). The historical
+  v0.4.0 changelog note is annotated with the correction. Code is the reference.
 - **Detector plugin system:** extend the engine without touching the core.
   `register_detector()` (instance or `@register_detector` class decorator) adds
   a detector to the default set; `discover_plugins()` loads detectors a package
@@ -133,8 +137,10 @@
 - **Reversible tokenize** redaction mode + `restore()` and a token vault.
 - **Config** (`--config`, `tabayyan.config.Config`): disable/add detectors,
   custom regex detectors with labels, extend confusables, tune thresholds.
-- **Performance**: rewrote overlap resolution from O(n^2) to O(n log n)
-  (~110x faster on dense input). Added `benchmarks/perf.py`.
+- **Performance**: rewrote overlap resolution to a sorted + bisect approach
+  (~110x faster on dense input). Added `benchmarks/perf.py`. (The original note
+  claimed O(n log n); the true worst case is O(n²) via `list.insert` — corrected
+  in a later release.)
 - **Docs**: REFERENCES.md (algorithm provenance), FAQ, threat model, config.
 - Golden-vector tests; National ID disclaimer clarifying it is the
   community algorithm, not an authoritative spec.
