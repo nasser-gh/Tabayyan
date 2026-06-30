@@ -4,6 +4,9 @@ Local-first. Zero telemetry. No network calls in the detection core.
 """
 from __future__ import annotations
 
+from .detectors import (
+    discover_plugins, register_detector, registered_detectors, unregister_all,
+)
 from .engine import DetectionEngine
 from .entities import Category, Confidence, EntityType, Match
 from .middleware import AuditLog, AuditRecord, Guard, ProtectResult, is_in_kingdom
@@ -32,6 +35,10 @@ __all__ = [
     "ProviderAdapter",
     "register_adapter",
     "resolve_adapter",
+    "register_detector",
+    "registered_detectors",
+    "discover_plugins",
+    "unregister_all",
     "Classification",
     "classify",
     "classification_summary",

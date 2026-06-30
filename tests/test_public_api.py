@@ -15,6 +15,7 @@ FROZEN_PUBLIC_API = {
     "scan", "scan_and_redact", "redact", "restore", "classify",
     "classification_summary", "is_in_kingdom", "encrypt_vault", "decrypt_vault",
     "save_vault", "load_vault", "register_adapter", "resolve_adapter",
+    "register_detector", "registered_detectors", "discover_plugins", "unregister_all",
     # classes
     "DetectionEngine", "Guard", "AuditLog", "AuditRecord", "ProtectResult",
     "Match", "RedactionResult", "RedactionItem", "ProviderAdapter",

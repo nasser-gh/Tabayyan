@@ -48,7 +48,8 @@ Everything re-exported from the top-level `tabayyan` package (i.e. listed in
 
 - **Functions:** `scan`, `scan_and_redact`, `redact`, `restore`, `classify`,
   `classification_summary`, `is_in_kingdom`, `encrypt_vault`, `decrypt_vault`,
-  `save_vault`, `load_vault`, `register_adapter`, `resolve_adapter`
+  `save_vault`, `load_vault`, `register_adapter`, `resolve_adapter`,
+  `register_detector`, `registered_detectors`, `discover_plugins`, `unregister_all`
 - **Classes:** `DetectionEngine`, `Guard`, `AuditLog`, `AuditRecord`,
   `ProtectResult`, `Match`, `RedactionResult`, `RedactionItem`, `ProviderAdapter`
 - **Enums:** `EntityType`, `Category`, `Confidence`, `RedactionMode`,

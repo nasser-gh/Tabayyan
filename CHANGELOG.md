@@ -1,6 +1,12 @@
 # Changelog
 
 ## Unreleased
+- **Detector plugin system:** extend the engine without touching the core.
+  `register_detector()` (instance or `@register_detector` class decorator) adds
+  a detector to the default set; `discover_plugins()` loads detectors a package
+  advertises under the `tabayyan.detectors` entry-point group. Discovery is
+  opt-in — third-party code runs only when you call it, not on import. New
+  `docs/plugins.md`; plugins inherit the existing contract tests.
 - **API stability & versioning policy:** new `docs/api-stability.md` defines the
   SemVer rules, what counts as a breaking change, the Stable / Experimental /
   Internal surface, and the deprecation policy. `tests/test_public_api.py`
