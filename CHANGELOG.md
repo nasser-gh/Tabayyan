@@ -1,6 +1,13 @@
 # Changelog
 
 ## Unreleased
+- **Threat model expanded:** `docs/threat-model.md` now uses non-absolute
+  wording ("substantially mitigated for supported rules"), separates upstream
+  dependencies (OCR, PDF extraction) from out-of-scope concerns (prompt
+  injection/jailbreak), calls out Unicode letter-confusables as ⚠ partial
+  (folded for domains, not free text), and adds sections on encoding
+  assumptions, resource exhaustion, and regex (ReDoS) safety — plus a threat
+  summary table and an explicit "Security guarantees & non-goals" section.
 - **Docs consistency:** the README performance section and roadmap no longer
   claim the overlap resolver is O(n log n); they now match the engine docstring
   (sort is O(n log n), worst case O(n²) via `list.insert`). The historical
