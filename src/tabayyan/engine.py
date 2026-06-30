@@ -23,7 +23,7 @@ import bisect
 from dataclasses import replace
 from typing import Iterable, Sequence
 
-from .detectors import DEFAULT_DETECTORS, Detector
+from .detectors import Detector, default_detectors
 from .entities import Confidence, Match
 from .normalize import normalize
 
@@ -32,7 +32,7 @@ _CONFIDENCE_RANK = {Confidence.HIGH: 3, Confidence.MEDIUM: 2, Confidence.LOW: 1}
 
 class DetectionEngine:
     def __init__(self, detectors: Sequence[Detector] | None = None, *, normalize_input: bool = True) -> None:
-        self.detectors = list(detectors) if detectors is not None else list(DEFAULT_DETECTORS)
+        self.detectors = list(detectors) if detectors is not None else default_detectors()
         self.normalize_input = normalize_input
 
     def scan(self, text: str) -> list[Match]:
