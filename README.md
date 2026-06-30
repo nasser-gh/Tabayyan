@@ -226,10 +226,12 @@ Single-threaded, default detector set, on synthetic text:
 python benchmarks/perf.py
 ```
 
-Overlap resolution is O(n log n); a pathologically dense 5 MB sample (one
-entity per ~57 bytes) scans in under 2 seconds on a typical CPU. Real prose
-is far sparser and proportionally faster. For very large files, use streaming
-so memory stays flat:
+Overlap resolution sorts in O(n log n) and accepts each match with two bisect
+lookups; keeping the disjoint set ordered uses `list.insert`, so the worst case
+is O(n²) for pathologically dense input (n = matches, not bytes). In practice n
+is tiny: a dense 5 MB sample (one entity per ~57 bytes) still scans in under
+2 seconds on a typical CPU, and real prose is far sparser. For very large
+files, use streaming so memory stays flat:
 
 ```bash
 tabayyan scan huge.log --stream
@@ -290,7 +292,7 @@ Tabayyan is a **detection aid, not a compliance guarantee**.
 - **v0.1** — detection core + Saudi/generic detectors + tests.
 - **v0.2** — redaction modes (mask/remove/hash/partial) + CLI.
 - **v0.3** — homoglyph/lookalike-domain detection, benchmark suite, Docker / pre-commit / PyPI / docs.
-- **v0.4** — Arabic name detection, streaming large files, reversible tokenize redaction, JSON config + custom detectors, O(n log n) engine, references + FAQ + threat-model docs.
+- **v0.4** — Arabic name detection, streaming large files, reversible tokenize redaction, JSON config + custom detectors, faster bisect-based overlap resolution, references + FAQ + threat-model docs.
 - **v0.5** — middleware + audit (cross-border flagging) and Presidio integration (validated Saudi recognizers).
 - **v0.6** *(current)* — six new Saudi entities (VAT, landline, passport, border/visa, National Address, unified 700); offset-preserving anti-evasion normalization; provider-agnostic adapter layer (OpenAI + Anthropic); NDMO data classification in the audit; password-encrypted tokenize vault; expanded precision/recall + evasion-robustness benchmarks; and security hardening (HMAC-keyed hash, block-path leak fix, timezone-aware audit timestamps).
 - **Next** — optional Arabic NER (extra), and optional prompt-injection heuristics (isolated module).
