@@ -1,6 +1,14 @@
 # Changelog
 
 ## Unreleased
+- **Golden corpus + contract tests:** a version-controlled synthetic corpus
+  (`tests/golden/detections.json`, regenerated via `python -m
+  tests.golden._generate`) locks the engine's exact detections (type, value,
+  span) per case, so any unintended detection drift fails CI. New contract
+  tests hold **every** detector in the default set to the same invariants —
+  valid in-bounds spans, proper enum types, determinism, and no crash on
+  arbitrary Unicode (Hypothesis-fuzzed) — so third-party detectors inherit the
+  same bar.
 - **Property-based tests (Hypothesis):** new `tests/test_properties.py` asserts
   input-agnostic invariants — normalization is idempotent and ASCII-identity,
   offset back-maps stay in bounds, checksum check-digits round-trip (and reject
