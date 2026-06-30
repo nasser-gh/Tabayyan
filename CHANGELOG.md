@@ -1,5 +1,12 @@
 # Changelog
 
+## Unreleased
+- **Property-based tests (Hypothesis):** new `tests/test_properties.py` asserts
+  input-agnostic invariants — normalization is idempotent and ASCII-identity,
+  offset back-maps stay in bounds, checksum check-digits round-trip (and reject
+  every wrong digit), and tokenize→restore is lossless. Part of the v1.0
+  hardening track. `hypothesis` added to the dev extra.
+
 ## 0.6.0
 - **Benchmark expansion:** `benchmarks/run.py` now measures the new Saudi
   entities (landline, VAT, passport, border, National Address, unified 700),

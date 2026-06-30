@@ -21,7 +21,7 @@ classifiers = [
 dependencies = []
 
 [project.optional-dependencies]
-dev = ["pytest>=7", "ruff>=0.4", "build>=1.0", "python-stdnum>=1.19", "cryptography>=42"]
+dev = ["pytest>=7", "ruff>=0.4", "build>=1.0", "python-stdnum>=1.19", "cryptography>=42", "hypothesis>=6"]
 docs = ["mkdocs-material>=9"]
 presidio = ["presidio-analyzer>=2.2"]
 crypto = ["cryptography>=42"]
