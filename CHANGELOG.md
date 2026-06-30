@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.7.0
 - **Release engineering & governance docs:** `RELEASE.md` (reproducible release
   checklist + trusted-publishing flow), `docs/compatibility.md` (supported
   Python/OS/extras matrix), `docs/adr/` (six Architecture Decision Records —
