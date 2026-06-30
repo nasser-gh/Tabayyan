@@ -295,12 +295,26 @@ Tabayyan is a **detection aid, not a compliance guarantee**.
 - **v0.4** — Arabic name detection, streaming large files, reversible tokenize redaction, JSON config + custom detectors, faster bisect-based overlap resolution, references + FAQ + threat-model docs.
 - **v0.5** — middleware + audit (cross-border flagging) and Presidio integration (validated Saudi recognizers).
 - **v0.6** *(current)* — six new Saudi entities (VAT, landline, passport, border/visa, National Address, unified 700); offset-preserving anti-evasion normalization; provider-agnostic adapter layer (OpenAI + Anthropic); NDMO data classification in the audit; password-encrypted tokenize vault; expanded precision/recall + evasion-robustness benchmarks; and security hardening (HMAC-keyed hash, block-path leak fix, timezone-aware audit timestamps).
-- **Next** — optional Arabic NER (extra), and optional prompt-injection heuristics (isolated module).
+- **Toward 1.0** *(in progress)* — verification & governance: property-based tests, golden corpus + contract tests, frozen public-API + SemVer/deprecation policy, detector plugin system, expanded threat model, scheduled fuzzing, and release-engineering docs.
+
+### After 1.0
+
+A short list of priorities (not a wishlist):
+
+- improved homoglyph / letter-confusable handling in free text;
+- additional regional identifiers;
+- enterprise integrations;
+- performance and streaming improvements;
+- optional static typing (mypy) in CI;
+- optional prompt-injection heuristics (isolated module).
 
 ## Contributing
 
-See [CONTRIBUTING.md](.github/CONTRIBUTING.md). One hard rule: **synthetic data only —
-never** commit real personal data.
+See [CONTRIBUTING.md](.github/CONTRIBUTING.md) and the
+[detector guide](docs/detector-guide.md). One hard rule: **synthetic data only —
+never** commit real personal data. Releases follow [RELEASE.md](RELEASE.md);
+supported environments are listed in [docs/compatibility.md](docs/compatibility.md),
+and the design rationale lives in the [ADRs](docs/adr/README.md).
 
 ## License
 

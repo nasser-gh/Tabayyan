@@ -1,6 +1,12 @@
 # Changelog
 
 ## Unreleased
+- **Release engineering & governance docs:** `RELEASE.md` (reproducible release
+  checklist + trusted-publishing flow), `docs/compatibility.md` (supported
+  Python/OS/extras matrix), `docs/adr/` (six Architecture Decision Records —
+  normalize-before-detect, single-package, opt-in plugins, API-stability,
+  Unicode philosophy, detector/validator split), `docs/detector-guide.md`
+  (contributor design guide), and a post-1.0 roadmap in the README.
 - **Scheduled fuzzing:** a coverage-guided fuzz target (`fuzz/fuzz_pipeline.py`,
   Atheris) drives the full pipeline — normalize → scan → redact — asserting the
   same invariants as the property tests. It is meant to run **weekly and

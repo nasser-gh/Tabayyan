@@ -14,8 +14,11 @@ nav:
   - Presidio integration: presidio.md
   - Configuration: config.md
   - Plugins: plugins.md
+  - Writing a detector: detector-guide.md
   - Benchmarks: benchmarks.md
   - FAQ: faq.md
   - Threat model: threat-model.md
   - API stability: api-stability.md
+  - Compatibility: compatibility.md
+  - Architecture decisions: adr/README.md
   - References: REFERENCES.md
