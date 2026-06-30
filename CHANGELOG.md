@@ -1,6 +1,11 @@
 # Changelog
 
 ## Unreleased
+- **API stability & versioning policy:** new `docs/api-stability.md` defines the
+  SemVer rules, what counts as a breaking change, the Stable / Experimental /
+  Internal surface, and the deprecation policy. `tests/test_public_api.py`
+  freezes the Stable export set and key signatures so an accidental
+  removal/rename of a public symbol fails CI.
 - **Golden corpus + contract tests:** a version-controlled synthetic corpus
   (`tests/golden/detections.json`, regenerated via `python -m
   tests.golden._generate`) locks the engine's exact detections (type, value,

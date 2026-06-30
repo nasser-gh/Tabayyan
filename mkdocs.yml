@@ -16,4 +16,5 @@ nav:
   - Benchmarks: benchmarks.md
   - FAQ: faq.md
   - Threat model: threat-model.md
+  - API stability: api-stability.md
   - References: REFERENCES.md
