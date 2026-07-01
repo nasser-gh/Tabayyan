@@ -299,7 +299,8 @@ Tabayyan is a **detection aid, not a compliance guarantee**.
 - **v0.4** — Arabic name detection, streaming large files, reversible tokenize redaction, JSON config + custom detectors, faster bisect-based overlap resolution, references + FAQ + threat-model docs.
 - **v0.5** — middleware + audit (cross-border flagging) and Presidio integration (validated Saudi recognizers).
 - **v0.6** — six new Saudi entities (VAT, landline, passport, border/visa, National Address, unified 700); offset-preserving anti-evasion normalization; provider-agnostic adapter layer (OpenAI + Anthropic); NDMO data classification in the audit; password-encrypted tokenize vault; expanded precision/recall + evasion-robustness benchmarks; and security hardening (HMAC-keyed hash, block-path leak fix, timezone-aware audit timestamps).
-- **v0.7** *(current)* — detector plugin system (`register_detector` + opt-in `entry_points` discovery); verification & governance: property-based tests, golden corpus + contract tests, frozen public-API + SemVer/deprecation policy; expanded threat model; scheduled fuzzing; and release-engineering docs (RELEASE, compatibility matrix, ADRs, detector guide).
+- **v0.7** — detector plugin system (`register_detector` + opt-in `entry_points` discovery); verification & governance: property-based tests, golden corpus + contract tests, frozen public-API + SemVer/deprecation policy; expanded threat model; scheduled fuzzing; and release-engineering docs (RELEASE, compatibility matrix, ADRs, detector guide).
+- **v0.7.1** *(current)* — fixes from a community hands-on review: README quick-start National ID checksum fix (+ regression test), `keep_last` alias for the CLI's `--keep-last`, and docs for Windows console encoding and Arabic-name detection scope.
 - **Toward 1.0** — the verification, API-stability, and governance foundations are in place; 1.0 is a stabilization milestone rather than a feature one.
 
 ### After 1.0
