@@ -1,16 +1,19 @@
 # Changelog
 
-## Unreleased
+## 0.7.1
+Thanks to **Ali .Z** for the thorough 0.7.0 hands-on review (Windows 11 /
+Python 3.12) that surfaced all of the following.
+
 - **Fix (docs):** the README quick-start used National ID `1010864543`, which
   fails the checksum and was therefore not detected — replaced with a valid
   `1010864542`. New `tests/test_readme_examples.py` asserts every `National ID`
   example in the README passes the checksum and is detected, so this can't
-  recur. (Reported via community testing.)
+  recur. (#22)
 - **DX:** `redact()` / `scan_and_redact()` now accept `keep_last` as an alias
-  for `partial_keep_last`, matching the CLI's `--keep-last`.
+  for `partial_keep_last`, matching the CLI's `--keep-last`. (#23)
 - **Docs:** FAQ entries for Windows console encoding
-  (`PYTHONIOENCODING=utf-8`) and for when Arabic names are/aren't detected
-  (trigger/particle examples).
+  (`PYTHONIOENCODING=utf-8`, #24) and for when Arabic names are/aren't detected
+  (trigger/particle examples, #25).
 
 ## 0.7.0
 - **Release engineering & governance docs:** `RELEASE.md` (reproducible release

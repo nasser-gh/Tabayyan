@@ -33,7 +33,7 @@ dependencies in the detection core.
 
 ## Status
 
-Public release (v0.7.0). The pre-1.0 version numbers track development
+Public release (v0.7.1). The pre-1.0 version numbers track development
 milestones — the CHANGELOG documents each. Expect the API to stabilise
 toward 1.0. What's covered by versioning and what's still experimental is
 spelled out in [docs/api-stability.md](docs/api-stability.md).
