@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.7.2
+- **Packaging:** richer PyPI listing — added project URLs (Documentation,
+  Changelog, Source alongside Homepage/Issues) and classifiers (explicit
+  Python 3.9–3.13, `OS Independent`, `Natural Language :: Arabic`/`English`,
+  `Text Processing :: Linguistic`); Development Status bumped `Alpha → Beta`.
+  No code changes.
+
 ## 0.7.1
 Thanks to **Ali .Z** for the thorough 0.7.0 hands-on review (Windows 11 /
 Python 3.12) that surfaced all of the following.
