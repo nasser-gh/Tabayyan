@@ -100,6 +100,7 @@ def redact(
     hash_length: int = 12,
     partial_keep_last: int = 4,
     partial_fill: str = "*",
+    keep_last: int | None = None,
 ) -> RedactionResult:
     """Return a RedactionResult with sanitised text and an item mapping.
 
@@ -109,7 +110,12 @@ def redact(
     HASH mode requires a non-empty `salt` (used as the HMAC key). Without it
     the tokens are trivially reversible by brute force for low-entropy
     identifiers, so an empty salt is rejected rather than silently insecure.
+
+    `keep_last` is an alias for `partial_keep_last`, matching the CLI's
+    `--keep-last`; if given it takes precedence.
     """
+    if keep_last is not None:
+        partial_keep_last = keep_last
     mode = RedactionMode(mode)
     if mode is RedactionMode.HASH and not salt:
         raise ValueError(

@@ -51,7 +51,7 @@ pip install -e ".[dev]"
 ```python
 from tabayyan import scan, scan_and_redact, RedactionMode
 
-for m in scan("call +966512345678 — National ID 1010864543 on file"):
+for m in scan("call +966512345678 — National ID 1010864542 on file"):
     print(m.entity_type.value, m.confidence.value, m.category.value)
 
 # Redact in one step
@@ -62,6 +62,10 @@ print(result.text)  # National ID [SAUDI_NATIONAL_ID]
 Each result is a `Match` with `entity_type`, `category`, `confidence`
 (HIGH / MEDIUM / LOW), character `start`/`end`, the matched `value`, and a
 `.redacted()` placeholder.
+
+> **Windows:** if printing Arabic raises `UnicodeEncodeError`, set
+> `PYTHONIOENCODING=utf-8` (a console limitation, not the library) — see the
+> [FAQ](docs/faq.md).
 
 ## CLI
 

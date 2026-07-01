@@ -42,3 +42,29 @@ names, and institution-specific formats. Do not make it your sole control.
 No. The detection core is offline. The only component that touches a
 network is a future middleware wrapper, which forwards exactly the
 (optionally redacted) payload you choose to send to your LLM endpoint.
+
+## Arabic text prints as garbage / `UnicodeEncodeError` on Windows
+
+That's the Windows console, not Tabayyan — the library handles Arabic fine;
+the default terminal code page (cp1252) can't encode it on `print()`. Fix the
+environment, not the code:
+
+```powershell
+$env:PYTHONIOENCODING = "utf-8"    # PowerShell
+set PYTHONIOENCODING=utf-8         # cmd.exe
+```
+
+or use Windows Terminal / a UTF-8 locale. Writing results to a file with
+`encoding="utf-8"` also sidesteps the console entirely.
+
+## When are Arabic names detected?
+
+The Arabic-name detector is heuristic and **context/particle driven** — it
+favours precision over recall. It fires on names carried by triggers or
+connectors, and deliberately misses bare names to avoid flagging every Arabic
+word:
+
+- ✅ `المريض محمد بن عبدالله القحطاني` — role trigger (`المريض`) + connector (`بن`)
+- ✅ `الاسم: عبدالله أحمد` — field label (`الاسم`)
+- ⚠️ `عبدالله أحمد` alone — often missed (no trigger); treat name recall as a
+  LOW-confidence lead and pair with human review for hospital notes / chat logs.
