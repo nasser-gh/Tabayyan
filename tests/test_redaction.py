@@ -59,6 +59,15 @@ def test_partial_keeps_last_n():
     assert repl.count("*") == len(nid) - 4
 
 
+def test_keep_last_alias_matches_cli_naming():
+    nid = make_national_id(random.Random(441), "1")
+    # keep_last (CLI's --keep-last) is an alias for partial_keep_last
+    a = scan_and_redact(f"id {nid}", "partial", keep_last=2).items[0].replacement
+    b = scan_and_redact(f"id {nid}", "partial", partial_keep_last=2).items[0].replacement
+    assert a == b
+    assert a.endswith(nid[-2:])
+
+
 def test_multiple_matches_offsets_preserved():
     rng = random.Random(45)
     nid = make_national_id(rng, "1")
