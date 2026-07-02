@@ -92,6 +92,10 @@ drops into any stack — **FastAPI**, **LangChain**, batch jobs, or your own SDK
 
 ## Playground (demo web UI)
 
+<p align="center">
+<img src="docs/assets/playground.svg" alt="Tabayyan Playground — Saudi PII highlighted, classified, and listed as cards, with redaction preview" width="100%">
+</p>
+
 Try Tabayyan in the browser — paste text, see PII highlighted, classified, and
 redacted — with **zero external calls**. It's a demo that consumes the public
 API only (no core changes):
