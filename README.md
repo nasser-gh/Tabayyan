@@ -38,33 +38,37 @@ pip install tabayyan
 
 ## How it works
 
-```mermaid
-flowchart LR
-    A[Input text] --> B[Unicode<br/>normalization]
-    B --> C[Detection<br/>engine]
-    C --> D[Checksum /<br/>validation]
-    D --> E[Classify<br/>type · confidence · NDMO]
-    E --> F[Redact ·<br/>hash · tokenize]
-    F --> G[Safe output]
-```
+<img src="docs/assets/pipeline.svg" alt="Pipeline: input → Unicode normalization → detection → checksum validation → classification → redact/hash/tokenize → safe output" width="100%">
+
+<sub>**Input** → **Unicode normalization** (strip zero-width/bidi, fold Arabic-Indic & fullwidth digits) → **detection** → **checksum validation** → **classification** (type · confidence · NDMO level) → **redact / hash / tokenize** → **safe output**. Pure-ASCII input is unchanged; matches map back to the original offsets.</sub>
 
 ## Before / after
 
-**Input**
+`scan_and_redact(text, "mask")` — detects, then rewrites the original text in place:
 
-```
+<table>
+<tr><th align="left">Input</th><th align="left">Output</th></tr>
+<tr valign="top">
+<td>
+
+```text
 المريض محمد بن عبدالله
 National ID: 1158813996
 Phone: +966512345678
 ```
 
-**Output** — `scan_and_redact(text, "mask")`
+</td>
+<td>
 
-```
+```text
 المريض [ARABIC_NAME]
 National ID: [SAUDI_NATIONAL_ID]
 Phone: [SAUDI_MOBILE]
 ```
+
+</td>
+</tr>
+</table>
 
 ## Why Tabayyan?
 
