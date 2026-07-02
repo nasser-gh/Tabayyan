@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 168" role="img" aria-label="Pipeline: input, Unicode normalization, detection, checksum validation, classification, redaction, safe output">
+  <defs>
+    <linearGradient id="pbg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#0f766e"/>
+      <stop offset="1" stop-color="#0e7490"/>
+    </linearGradient>
+    <style>
+      text { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; fill: #ffffff; }
+      .lbl { font-size: 15px; font-weight: 600; }
+    </style>
+    <marker id="arrow" viewBox="0 0 10 10" refX="7" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+      <path d="M0,1 L9,5 L0,9" fill="none" stroke="#ffffff" stroke-width="1.6" opacity="0.85"/>
+    </marker>
+  </defs>
+
+  <rect width="1280" height="168" rx="20" fill="url(#pbg)"/>
+
+  <!-- chips: x0=34, width=146, step=177 -->
+  <g>
+    <!-- 1 -->
+    <rect x="34" y="46" width="146" height="76" rx="16" fill="#ffffff" opacity="0.14"/>
+    <text class="lbl" x="107" y="80" text-anchor="middle">Input</text>
+    <text class="lbl" x="107" y="100" text-anchor="middle">text</text>
+    <!-- 2 -->
+    <rect x="211" y="46" width="146" height="76" rx="16" fill="#ffffff" opacity="0.14"/>
+    <text class="lbl" x="284" y="80" text-anchor="middle">Normalize</text>
+    <text class="lbl" x="284" y="100" text-anchor="middle" opacity="0.85">Unicode</text>
+    <!-- 3 -->
+    <rect x="388" y="46" width="146" height="76" rx="16" fill="#ffffff" opacity="0.14"/>
+    <text class="lbl" x="461" y="80" text-anchor="middle">Detect</text>
+    <text class="lbl" x="461" y="100" text-anchor="middle" opacity="0.85">engine</text>
+    <!-- 4 -->
+    <rect x="565" y="46" width="146" height="76" rx="16" fill="#ffffff" opacity="0.14"/>
+    <text class="lbl" x="638" y="80" text-anchor="middle">Validate</text>
+    <text class="lbl" x="638" y="100" text-anchor="middle" opacity="0.85">checksum</text>
+    <!-- 5 -->
+    <rect x="742" y="46" width="146" height="76" rx="16" fill="#ffffff" opacity="0.14"/>
+    <text class="lbl" x="815" y="80" text-anchor="middle">Classify</text>
+    <text class="lbl" x="815" y="100" text-anchor="middle" opacity="0.85">type · NDMO</text>
+    <!-- 6 -->
+    <rect x="919" y="46" width="146" height="76" rx="16" fill="#ffffff" opacity="0.14"/>
+    <text class="lbl" x="992" y="80" text-anchor="middle">Redact</text>
+    <text class="lbl" x="992" y="100" text-anchor="middle" opacity="0.85">hash · tokenize</text>
+    <!-- 7 -->
+    <rect x="1096" y="46" width="146" height="76" rx="16" fill="#ffffff" opacity="0.22"/>
+    <text class="lbl" x="1169" y="80" text-anchor="middle">Safe</text>
+    <text class="lbl" x="1169" y="100" text-anchor="middle">output</text>
+  </g>
+
+  <!-- arrows between chips (y=84) -->
+  <g stroke="#ffffff" stroke-width="2" opacity="0.85">
+    <line x1="184" y1="84" x2="207" y2="84" marker-end="url(#arrow)"/>
+    <line x1="361" y1="84" x2="384" y2="84" marker-end="url(#arrow)"/>
+    <line x1="538" y1="84" x2="561" y2="84" marker-end="url(#arrow)"/>
+    <line x1="715" y1="84" x2="738" y2="84" marker-end="url(#arrow)"/>
+    <line x1="892" y1="84" x2="915" y2="84" marker-end="url(#arrow)"/>
+    <line x1="1069" y1="84" x2="1092" y2="84" marker-end="url(#arrow)"/>
+  </g>
+
+  <text x="34" y="28" font-size="16" font-weight="700" opacity="0.9">How Tabayyan processes text</text>
+</svg>
