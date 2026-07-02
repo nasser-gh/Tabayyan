@@ -1,0 +1,1162 @@
+
+<!doctype html>
+<html lang="en" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Saudi-aware PII detection & redaction for LLM pipelines">
+      
+      
+      
+      
+        <link rel="prev" href="../faq/">
+      
+      
+        <link rel="next" href="../api-stability/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+    
+    
+      
+        <title>Threat model - Tabayyan</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.484c7ddc.min.css">
+      
+        
+        <link rel="stylesheet" href="../assets/stylesheets/palette.ab4e12ef.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    
+    
+      
+    
+    
+    
+    
+    <body dir="ltr" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#threat-model" class="md-skip">
+          Skip to content
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Header">
+    <a href=".." title="Tabayyan" class="md-header__button md-logo" aria-label="Tabayyan" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Tabayyan
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Threat model
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+      
+        <form class="md-header__option" data-md-component="palette">
+  
+    
+    
+    
+    <input class="md-option" data-md-color-media="" data-md-color-scheme="default" data-md-color-primary="teal" data-md-color-accent="indigo"  aria-hidden="true"  type="radio" name="__palette" id="__palette_0">
+    
+  
+</form>
+      
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Search" placeholder="Search" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Search">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Clear" aria-label="Clear" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Initializing search
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navigation" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Tabayyan" class="md-nav__button md-logo" aria-label="Tabayyan" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Tabayyan
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../showcase/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Showcase
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../cli/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    CLI
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../detectors/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Detectors
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../middleware/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Middleware & audit
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../presidio/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Presidio integration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../config/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Configuration
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../plugins/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Plugins
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../detector-guide/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Writing a detector
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../benchmarks/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Benchmarks
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../faq/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    FAQ
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Threat model
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Threat model
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-tabayyan-defends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Tabayyan defends
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#threat-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Threat summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upstream-dependencies-not-out-of-scope-but-bounded-by-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upstream dependencies (not out of scope, but bounded by inputs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unicode-encoding-assumptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unicode &amp; encoding assumptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource-exhaustion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resource exhaustion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regex-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regex safety
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trust-boundaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trust boundaries
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-guarantees-non-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security guarantees &amp; non-goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#residual-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Residual risks
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../api-stability/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    API stability
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../compatibility/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Compatibility
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../adr/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Architecture decisions
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../REFERENCES/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    References
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Table of contents">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Table of contents
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#what-tabayyan-defends" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        What Tabayyan defends
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#threat-summary" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Threat summary
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#upstream-dependencies-not-out-of-scope-but-bounded-by-inputs" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Upstream dependencies (not out of scope, but bounded by inputs)
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#unicode-encoding-assumptions" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Unicode &amp; encoding assumptions
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#resource-exhaustion" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Resource exhaustion
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#regex-safety" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Regex safety
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#trust-boundaries" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Trust boundaries
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#security-guarantees-non-goals" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Security guarantees &amp; non-goals
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#residual-risks" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Residual risks
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="threat-model">Threat model</h1>
+<p>Tabayyan's value comes from being precise about what it does and does not do.
+This document separates threats it <strong>actively mitigates</strong>, threats that are
+<strong>upstream dependencies</strong>, and threats that are <strong>intentionally out of scope</strong>.
+Security wording here is deliberately non-absolute: mitigations hold for the
+<em>currently supported</em> rules, and future Unicode revisions or newly discovered
+confusables may introduce cases not yet handled.</p>
+<h2 id="what-tabayyan-defends">What Tabayyan defends</h2>
+<ul>
+<li><strong>Accidental disclosure of personal data to an LLM endpoint</strong> — by detecting
+  and redacting Saudi/PII entities in prompts before they leave your environment.</li>
+<li><strong>Leakage of PII into logs, tickets, or repos</strong> — via the CLI in CI /
+  pre-commit gates (<code>--fail-on-find</code>).</li>
+<li><strong>Homograph / lookalike-domain phishing references</strong> — via the opt-in domain
+  detector against a watchlist.</li>
+<li><strong>Evasion via invisible or look-alike characters</strong> — an offset-preserving
+  normalization pre-pass (<code>normalize.py</code>) strips Unicode format/bidi characters
+  (category <code>Cf</code>) and folds Arabic-Indic, Persian and fullwidth digits (plus
+  per-character NFKC) before detection. This is <strong>substantially mitigated for
+  the supported normalization rules</strong>; matches are projected back onto the
+  original span so redaction still rewrites the real text (invisibles included).</li>
+</ul>
+<h2 id="threat-summary">Threat summary</h2>
+<table>
+<thead>
+<tr>
+<th>Threat</th>
+<th>Status</th>
+<th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Zero-width characters</td>
+<td>✅ Mitigated</td>
+<td>Removed during normalization (Unicode <code>Cf</code>)</td>
+</tr>
+<tr>
+<td>RTL/LTR &amp; bidi overrides</td>
+<td>✅ Mitigated</td>
+<td>Directional controls stripped (<code>Cf</code>)</td>
+</tr>
+<tr>
+<td>Arabic-Indic / Persian / fullwidth digits</td>
+<td>✅ Mitigated</td>
+<td>Canonicalized to ASCII before detection</td>
+</tr>
+<tr>
+<td>NFKC compatibility forms</td>
+<td>✅ Mitigated</td>
+<td>Folded per character</td>
+</tr>
+<tr>
+<td>Unicode confusable <strong>letters</strong> (Cyrillic/Greek lookalikes)</td>
+<td>⚠ Partial</td>
+<td>Folded for <strong>domains</strong> via the homoglyph skeleton; <strong>not</strong> folded in free text, so a Cyrillic letter inside a name/email may evade. Numeric identifiers are unaffected (digit confusables are folded)</td>
+</tr>
+<tr>
+<td>Mixed-script tokens</td>
+<td>⚠ Partial</td>
+<td>Flagged for domains; not a normalization step for general text</td>
+</tr>
+<tr>
+<td>OCR extraction artifacts</td>
+<td>⚪ Upstream dependency</td>
+<td>See below</td>
+</tr>
+<tr>
+<td>PDF text-extraction artifacts</td>
+<td>⚪ Upstream dependency</td>
+<td>See below</td>
+</tr>
+<tr>
+<td>Prompt injection / jailbreak</td>
+<td>❌ Out of scope</td>
+<td>Separate LLM-security concern</td>
+</tr>
+<tr>
+<td>Resource exhaustion (huge inputs)</td>
+<td>⚠ Partial</td>
+<td>Streaming recommended; see below</td>
+</tr>
+<tr>
+<td>Regex catastrophic backtracking (ReDoS)</td>
+<td>✅ By design</td>
+<td>Bounded quantifiers, no nested unbounded groups; dedicated fuzzing planned</td>
+</tr>
+</tbody>
+</table>
+<p>Legend: ✅ mitigated for supported rules · ⚠ partial / conditional · ⚪ upstream dependency · ❌ out of scope.</p>
+<h2 id="upstream-dependencies-not-out-of-scope-but-bounded-by-inputs">Upstream dependencies (not out of scope, but bounded by inputs)</h2>
+<ul>
+<li><strong>OCR quality is an upstream dependency.</strong> Tabayyan operates on <em>extracted
+  text</em>, not document images. Detection quality is therefore bounded by the
+  quality of upstream OCR — characters the OCR drops or mangles cannot be
+  detected.</li>
+<li><strong>PDF text-extraction artifacts are upstream.</strong> Tabayyan analyzes the text a
+  PDF extractor produces and does not attempt document reconstruction; ligature
+  splitting, reordered runs, or missing spaces from the extractor propagate
+  into detection.</li>
+</ul>
+<h2 id="unicode-encoding-assumptions">Unicode &amp; encoding assumptions</h2>
+<ul>
+<li>Tabayyan operates on Python <code>str</code> (Unicode). Decoding bytes is the <strong>caller's
+  responsibility</strong>; the CLI reads files as UTF-8 with <code>errors="replace"</code>, so
+  invalid byte sequences become U+FFFD before detection rather than raising.</li>
+<li>Malformed Unicode and lone replacement characters are treated as ordinary
+  text — they neither crash detection (see the Hypothesis fuzz contract tests)
+  nor are specially interpreted.</li>
+<li>UTF-16 / other encodings must be decoded to <code>str</code> by the caller first.</li>
+</ul>
+<h2 id="resource-exhaustion">Resource exhaustion</h2>
+<ul>
+<li>Detection is single-pass per detector over the input; memory scales with
+  input size for the in-memory API. For multi-megabyte documents, use
+  <strong>streaming</strong> (<code>tabayyan scan --stream</code>, <code>tabayyan.streaming.scan_file</code>) so
+  memory stays flat with overlap windows.</li>
+<li>Overlap resolution is O(n²) worst case in the number of <em>matches</em> (not bytes);
+  in practice n is tiny. See the performance notes in the README.</li>
+<li>Tabayyan does not impose hard input-size limits — bound inputs at your
+  ingestion layer if untrusted.</li>
+</ul>
+<h2 id="regex-safety">Regex safety</h2>
+<ul>
+<li>Detector patterns are written to <strong>avoid catastrophic backtracking</strong>: bounded
+  quantifiers (<code>\d{10}</code>, <code>{4,20}</code>) and no nested unbounded groups over
+  overlapping character classes. The Hypothesis contract tests run every
+  detector over arbitrary Unicode without hangs; a dedicated ReDoS fuzz target
+  is a planned scheduled job.</li>
+<li>A <code>--config</code> file can add <strong>custom</strong> regex detectors. Treat config as code: a
+  malicious or naive pattern can reintroduce catastrophic backtracking. Review
+  configs from untrusted sources.</li>
+</ul>
+<h2 id="trust-boundaries">Trust boundaries</h2>
+<ul>
+<li>The detection core runs <strong>inside your trust boundary</strong> and stays there: no
+  network egress, no telemetry.</li>
+<li>In <strong>tokenize</strong> mode the vault (token → original) is the reversal key. Store
+  it with the controls you'd apply to the original data —
+  <code>tabayyan.vault.save_vault()</code> persists it password-encrypted (Fernet +
+  PBKDF2-HMAC-SHA256, via <code>tabayyan[crypto]</code>). Treat <code>hash</code> output as
+  pseudonymous, not anonymous.</li>
+<li>Detector plugins loaded via <code>discover_plugins()</code> execute third-party code;
+  discovery is opt-in for this reason. Treat installed plugins as trusted code.</li>
+</ul>
+<h2 id="security-guarantees-non-goals">Security guarantees &amp; non-goals</h2>
+<p><strong>Guarantees</strong></p>
+<ul>
+<li>Deterministic detection over supported, normalized text (same input → same
+  output; verified by the golden corpus and property tests).</li>
+<li>Checksum-backed types (National ID, Iqama, IBAN, credit card) are validated
+  structurally, not merely format-matched.</li>
+<li>No network calls or telemetry in the detection core.</li>
+</ul>
+<p><strong>Non-goals</strong> — Tabayyan is not, and does not try to be:</p>
+<ul>
+<li>a prompt-injection / jailbreak / instruction-following defense;</li>
+<li>an OCR engine or a document-reconstruction tool;</li>
+<li>a guarantee that a detected identifier was actually <em>issued</em> (only that it is
+  structurally valid where a checksum exists);</li>
+<li>a replacement for downstream security controls (DLP, WAF, output safety).</li>
+</ul>
+<h2 id="residual-risks">Residual risks</h2>
+<ul>
+<li><strong>False negatives</strong> on free-form names, unusual formats, and letter-confusable
+  evasion in non-domain text.</li>
+<li><strong>Checksum-valid but unissued</strong> identifiers pass validation.</li>
+<li><strong>Synthetic-only benchmark</strong>: published metrics measure detectors against
+  designed distributions, not real production traffic.</li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": [], "search": "../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.79ae519e.min.js"></script>
+      
+    
+  </body>
+</html>

@@ -1,0 +1,129 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 760" role="img" aria-label="Tabayyan Playground: two-column web UI showing detected Saudi PII highlighted and listed as cards">
+  <defs>
+    <style>
+      text { font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+      .mono { font-family: ui-monospace, "SF Mono", Menlo, Consolas, monospace; }
+      .ar { font-family: "Segoe UI", "Noto Naskh Arabic", "Geeza Pro", serif; }
+      .muted { fill: #64748b; }
+      .txt { fill: #0f172a; }
+    </style>
+  </defs>
+
+  <!-- window -->
+  <rect x="8" y="8" width="1184" height="744" rx="16" fill="#ffffff" stroke="#e2e8f0"/>
+  <!-- title bar -->
+  <path d="M8 24 a16 16 0 0 1 16-16 h1152 a16 16 0 0 1 16 16 v24 h-1184 z" fill="#f1f5f9"/>
+  <circle cx="34" cy="32" r="6" fill="#f87171"/>
+  <circle cx="54" cy="32" r="6" fill="#fbbf24"/>
+  <circle cx="74" cy="32" r="6" fill="#34d399"/>
+  <rect x="470" y="22" width="260" height="20" rx="10" fill="#e2e8f0"/>
+  <text x="600" y="36" text-anchor="middle" font-size="12" class="muted">127.0.0.1:8000 · offline</text>
+
+  <!-- app header -->
+  <g transform="translate(28,66)">
+    <rect width="28" height="28" rx="8" fill="#0e7490"/>
+    <text x="14" y="20" text-anchor="middle" class="ar" font-size="17" fill="#fff" font-weight="800">ت</text>
+    <text x="40" y="20" font-size="16" font-weight="700" class="txt">Tabayyan <tspan class="ar">تبيّن</tspan> <tspan class="muted" font-weight="600">Playground</tspan></text>
+    <g transform="translate(980,2)">
+      <rect width="90" height="24" rx="12" fill="#ecfdf5" stroke="#a7f3d0"/>
+      <text x="45" y="16" text-anchor="middle" font-size="12" fill="#059669">● Offline</text>
+    </g>
+    <text x="1088" y="18" font-size="13" fill="#0e7490">GitHub</text>
+  </g>
+  <line x1="8" y1="110" x2="1192" y2="110" stroke="#e2e8f0"/>
+
+  <!-- ===== LEFT PANEL ===== -->
+  <g transform="translate(28,130)">
+    <rect width="540" height="590" rx="14" fill="#ffffff" stroke="#e2e8f0"/>
+    <!-- samples -->
+    <text x="18" y="34" font-size="12" class="muted">Samples:</text>
+    <g transform="translate(78,22)" font-size="12" class="txt">
+      <rect width="104" height="24" rx="12" fill="#f1f5f9" stroke="#e2e8f0"/><text x="52" y="16" text-anchor="middle">🏦 Banking</text>
+      <rect x="114" width="120" height="24" rx="12" fill="#0e7490"/><text x="174" y="16" text-anchor="middle" fill="#fff">🏛️ Government</text>
+      <rect x="244" width="70" height="24" rx="12" fill="#f1f5f9" stroke="#e2e8f0"/><text x="279" y="16" text-anchor="middle">👥 HR</text>
+    </g>
+    <!-- editor -->
+    <rect x="18" y="60" width="504" height="470" rx="12" fill="#f8fafc" stroke="#e2e8f0"/>
+    <g class="mono txt" font-size="13">
+      <text x="500" y="92" text-anchor="end" class="ar">طلب تحويل</text>
+      <text x="500" y="118" text-anchor="end"><tspan class="ar" fill="#334155">العميلة: </tspan><tspan fill="#7c3aed">سارة بنت أحمد</tspan></text>
+      <text x="500" y="144" text-anchor="end"><tspan class="ar" fill="#334155">الآيبان: </tspan><tspan fill="#059669">SA0336056712565535665936</tspan></text>
+      <text x="500" y="170" text-anchor="end"><tspan class="ar" fill="#334155">رقم الهوية: </tspan><tspan fill="#dc2626">1375689344</tspan></text>
+      <text x="500" y="196" text-anchor="end"><tspan class="ar" fill="#334155">الرقم الضريبي: </tspan><tspan fill="#d97706">310000000000003</tspan></text>
+      <text x="500" y="222" text-anchor="end"><tspan class="ar" fill="#334155">الجوال: </tspan><tspan fill="#2563eb">+966557225391</tspan></text>
+    </g>
+    <text x="18" y="556" font-size="12" class="muted">142 chars</text>
+    <text x="522" y="556" text-anchor="end" font-size="12" fill="#0e7490">Upload .txt   Clear</text>
+    <!-- actions -->
+    <rect x="18" y="566" width="80" height="34" rx="9" fill="#0e7490"/>
+    <text x="58" y="588" text-anchor="middle" font-size="14" fill="#fff" font-weight="600">Scan</text>
+    <rect x="392" y="566" width="80" height="34" rx="9" fill="#fff" stroke="#e2e8f0"/>
+    <text x="432" y="588" text-anchor="middle" font-size="14" class="txt" font-weight="600">Redact</text>
+    <rect x="472" y="566" width="50" height="34" rx="9" fill="#fff" stroke="#e2e8f0"/>
+    <text x="497" y="588" text-anchor="middle" font-size="12" class="muted">mask ▾</text>
+  </g>
+
+  <!-- ===== RIGHT PANEL ===== -->
+  <g transform="translate(588,130)">
+    <rect width="584" height="590" rx="14" fill="#ffffff" stroke="#e2e8f0"/>
+    <!-- stats -->
+    <g transform="translate(16,16)">
+      <!-- 7 chips -->
+      <g font-size="11">
+        <g><rect width="72" height="52" rx="9" fill="#f1f5f9"/><text x="36" y="28" text-anchor="middle" font-size="18" font-weight="700" class="txt">5</text><text x="36" y="44" text-anchor="middle" class="muted">detections</text></g>
+        <g transform="translate(78,0)"><rect width="72" height="52" rx="9" fill="#f1f5f9"/><text x="36" y="28" text-anchor="middle" font-size="18" font-weight="700" fill="#dc2626">2</text><text x="36" y="44" text-anchor="middle" class="muted">HIGH</text></g>
+        <g transform="translate(156,0)"><rect width="72" height="52" rx="9" fill="#f1f5f9"/><text x="36" y="28" text-anchor="middle" font-size="18" font-weight="700" fill="#d97706">2</text><text x="36" y="44" text-anchor="middle" class="muted">MEDIUM</text></g>
+        <g transform="translate(234,0)"><rect width="72" height="52" rx="9" fill="#f1f5f9"/><text x="36" y="28" text-anchor="middle" font-size="18" font-weight="700" fill="#64748b">1</text><text x="36" y="44" text-anchor="middle" class="muted">LOW</text></g>
+        <g transform="translate(312,0)"><rect width="72" height="52" rx="9" fill="#f1f5f9"/><text x="36" y="28" text-anchor="middle" font-size="18" font-weight="700" class="txt">0.9</text><text x="36" y="44" text-anchor="middle" class="muted">ms</text></g>
+        <g transform="translate(390,0)"><rect width="72" height="52" rx="9" fill="#f1f5f9"/><text x="36" y="28" text-anchor="middle" font-size="18" font-weight="700" class="txt">142</text><text x="36" y="44" text-anchor="middle" class="muted">chars</text></g>
+        <g transform="translate(468,0)"><rect width="72" height="52" rx="9" fill="#f1f5f9"/><text x="36" y="28" text-anchor="middle" font-size="18" font-weight="700" class="txt">15</text><text x="36" y="44" text-anchor="middle" class="muted">detectors</text></g>
+      </g>
+    </g>
+    <!-- tabs -->
+    <g transform="translate(16,84)" font-size="13" font-weight="600">
+      <text x="0" y="14" class="txt">Results</text><rect x="-2" y="24" width="52" height="2" fill="#0e7490"/>
+      <text x="70" y="14" class="muted">JSON</text>
+      <text x="128" y="14" class="muted">Redaction</text>
+    </g>
+    <line x1="16" y1="110" x2="568" y2="110" stroke="#e2e8f0"/>
+
+    <!-- highlighted text -->
+    <rect x="16" y="124" width="552" height="120" rx="10" fill="#f8fafc" stroke="#e2e8f0"/>
+    <g class="mono" font-size="12.5">
+      <text x="552" y="150" text-anchor="end"><tspan class="ar" fill="#334155">العميلة: </tspan><tspan fill="#7c3aed">سارة بنت أحمد</tspan></text>
+      <text x="552" y="174" text-anchor="end"><tspan class="ar" fill="#334155">الآيبان: </tspan><tspan fill="#059669">SA0336056712565535665936</tspan></text>
+      <text x="552" y="198" text-anchor="end"><tspan class="ar" fill="#334155">رقم الهوية: </tspan><tspan fill="#dc2626">1375689344</tspan><tspan class="ar" fill="#334155">  الرقم الضريبي: </tspan><tspan fill="#d97706">310…</tspan></text>
+      <text x="552" y="222" text-anchor="end"><tspan class="ar" fill="#334155">الجوال: </tspan><tspan fill="#2563eb">+966557225391</tspan></text>
+    </g>
+
+    <!-- cards -->
+    <g transform="translate(16,258)">
+      <!-- card 1 -->
+      <rect width="552" height="72" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+      <rect width="4" height="72" rx="2" fill="#059669"/>
+      <text x="16" y="26" font-size="14" font-weight="700" class="txt">Saudi IBAN</text>
+      <rect x="480" y="12" width="56" height="20" rx="10" fill="#fff" stroke="#dc2626"/><text x="508" y="26" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="700">HIGH</text>
+      <text x="16" y="46" class="mono" font-size="13" fill="#334155">SA0336056712565535665936</text>
+      <rect x="16" y="52" width="72" height="16" rx="8" fill="#fff" stroke="#e2e8f0"/><text x="52" y="64" text-anchor="middle" font-size="10" class="muted">Financial</text>
+      <rect x="94" y="52" width="90" height="16" rx="8" fill="#fff" stroke="#e2e8f0"/><text x="139" y="64" text-anchor="middle" font-size="10" class="muted">offset 42–66</text>
+    </g>
+    <g transform="translate(16,340)">
+      <rect width="552" height="72" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+      <rect width="4" height="72" rx="2" fill="#dc2626"/>
+      <text x="16" y="26" font-size="14" font-weight="700" class="txt">Saudi National ID</text>
+      <rect x="480" y="12" width="56" height="20" rx="10" fill="#fff" stroke="#dc2626"/><text x="508" y="26" text-anchor="middle" font-size="11" fill="#dc2626" font-weight="700">HIGH</text>
+      <text x="16" y="46" class="mono" font-size="13" fill="#334155">1375689344</text>
+      <rect x="16" y="52" width="118" height="16" rx="8" fill="#fff" stroke="#e2e8f0"/><text x="75" y="64" text-anchor="middle" font-size="10" class="muted">National Identifier</text>
+      <rect x="140" y="52" width="90" height="16" rx="8" fill="#fff" stroke="#e2e8f0"/><text x="185" y="64" text-anchor="middle" font-size="10" class="muted">offset 78–88</text>
+    </g>
+    <g transform="translate(16,422)">
+      <rect width="552" height="72" rx="10" fill="#ffffff" stroke="#e2e8f0"/>
+      <rect width="4" height="72" rx="2" fill="#d97706"/>
+      <text x="16" y="26" font-size="14" font-weight="700" class="txt">VAT / Tax Number</text>
+      <rect x="466" y="12" width="70" height="20" rx="10" fill="#fff" stroke="#d97706"/><text x="501" y="26" text-anchor="middle" font-size="11" fill="#d97706" font-weight="700">MEDIUM</text>
+      <text x="16" y="46" class="mono" font-size="13" fill="#334155">310000000000003</text>
+      <rect x="16" y="52" width="72" height="16" rx="8" fill="#fff" stroke="#e2e8f0"/><text x="52" y="64" text-anchor="middle" font-size="10" class="muted">Financial</text>
+      <rect x="94" y="52" width="98" height="16" rx="8" fill="#fff" stroke="#e2e8f0"/><text x="143" y="64" text-anchor="middle" font-size="10" class="muted">offset 105–120</text>
+    </g>
+  </g>
+</svg>
