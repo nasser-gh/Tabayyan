@@ -1,0 +1,5 @@
+# Playground demo app dependencies (separate from the zero-dependency core).
+# Install Tabayyan from the repo root with `pip install -e .` (or `pip install tabayyan`).
+fastapi>=0.110
+uvicorn[standard]>=0.29
+jinja2>=3.1
