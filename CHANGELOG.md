@@ -1,5 +1,14 @@
 # Changelog
 
+## Unreleased
+- **README redesign (UX):** the top now leads with a one-line value prop,
+  badges (PyPI/Python/tests/license), verified at-a-glance metrics, a Mermaid
+  pipeline diagram, a before/after example, a capability-comparison table, and
+  a "Works with" section — so a first-time visitor grasps the value, the
+  differentiator, and how to start in seconds. Metrics are verified, not
+  aspirational; integrations list only what actually exists (built-in
+  OpenAI/Azure/Anthropic/Presidio + the provider-agnostic building block).
+
 ## 0.7.2
 - **Packaging:** richer PyPI listing — added project URLs (Documentation,
   Changelog, Source alongside Homepage/Issues) and classifiers (explicit

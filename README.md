@@ -1,35 +1,72 @@
-## Tabayyan
+# Tabayyan · تبيّن
 
-**Saudi-aware PII detection & redaction for LLM pipelines. Local-first, zero telemetry.**
+**Saudi-first PII detection & redaction for LLM pipelines — checksum-validated, Unicode-aware, fully offline.**
 
-
-
+[![PyPI](https://img.shields.io/pypi/v/tabayyan.svg)](https://pypi.org/project/tabayyan/)
+[![Python](https://img.shields.io/pypi/pyversions/tabayyan.svg)](https://pypi.org/project/tabayyan/)
 [![tests](https://github.com/nasser-gh/tabayyan/actions/workflows/tests.yml/badge.svg)](https://github.com/nasser-gh/tabayyan/actions)
 [![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
 
-Generic PII scanners are built around Western identifiers and miss Saudi ones —
-or flag them with no validation. **Tabayyan** detects Saudi-specific personal
-data (National ID, Iqama, Saudi IBAN, CR, VAT, `+966` mobile & landline, passport,
-border/visa, National Address, unified 700 number, medical record numbers)
-with real checksum validation, then tags each finding by data category and
-confidence so you can redact or block before text leaves your environment for an
-LLM endpoint.
+**16 detectors** · **240+ tests** (property · golden-regression · contract · fuzz) · **Python 3.9–3.13** · **zero-dependency, offline core**
 
-It runs **fully offline**: no network calls, no telemetry, no external
-dependencies in the detection core.
----
+Generic PII libraries target international identifiers and either miss Saudi ones
+or flag them with no validation. **Tabayyan** adds first-class Saudi & Arabic
+identifier support — backed by real checksums — while staying **offline,
+extensible, and production-friendly**.
 
-## Why it's different
+```bash
+pip install tabayyan
+```
 
-| | Generic PII tools | Tabayyan |
-|---|---|---|
-| Saudi National ID / Iqama | missed or unvalidated | checksum-validated (HIGH) |
-| Saudi IBAN | partial | ISO 13616 mod-97 (HIGH) |
-| Arabic-Indic digits (٠-٩) | usually missed | normalised + detected |
-| Medical Record Number | generic | health-category, PDPL/NDMO-aware |
-| Arabic personal names | usually missed | heuristic detector (opt-precision) |
-| Homograph / lookalike domains | rare | Arabic+Latin aware (opt-in) |
-| Network calls | sometimes | **never** |
+## How it works
+
+```mermaid
+flowchart LR
+    A[Input text] --> B[Unicode<br/>normalization]
+    B --> C[Detection<br/>engine]
+    C --> D[Checksum /<br/>validation]
+    D --> E[Classify<br/>type · confidence · NDMO]
+    E --> F[Redact ·<br/>hash · tokenize]
+    F --> G[Safe output]
+```
+
+## Before / after
+
+**Input**
+
+```
+المريض محمد بن عبدالله
+National ID: 1158813996
+Phone: +966512345678
+```
+
+**Output** — `scan_and_redact(text, "mask")`
+
+```
+المريض [ARABIC_NAME]
+National ID: [SAUDI_NATIONAL_ID]
+Phone: [SAUDI_MOBILE]
+```
+
+## Why Tabayyan?
+
+| Capability | Tabayyan | Generic PII tools |
+|---|:---:|:---:|
+| Saudi National ID / Iqama | ✅ checksum-validated | ❌ missed / unvalidated |
+| Saudi IBAN (mod-97) | ✅ | ⚠️ partial |
+| Saudi VAT · CR · passport · National Address | ✅ | ❌ |
+| Arabic-Indic digits & Unicode-evasion aware | ✅ normalized | ⚠️ often missed |
+| Checksum validation (not just format) | ✅ | ⚠️ rare |
+| Offline · zero-dependency core | ✅ | ⚠️ varies |
+| LLM guard + PDPL cross-border audit | ✅ | ❌ |
+| Homograph / Arabic+Latin lookalike domains | ✅ (opt-in) | ⚠️ rare |
+
+## Works with
+
+Built-in, auto-detecting adapters for **OpenAI**, **Azure OpenAI**, and
+**Anthropic**; a validated recognizer pack for **Microsoft Presidio**; and a
+provider-agnostic building block (`Guard.protect_messages` / `Guard.wrap`) that
+drops into any stack — **FastAPI**, **LangChain**, batch jobs, or your own SDK.
 
 ## Status
 
@@ -41,9 +78,10 @@ spelled out in [docs/api-stability.md](docs/api-stability.md).
 ## Install
 
 ```bash
-pip install tabayyan        # once published to PyPI
-# or, from source:
-pip install -e ".[dev]"
+pip install tabayyan             # core (zero dependencies)
+pip install "tabayyan[crypto]"   # + encrypted tokenize vault
+pip install "tabayyan[presidio]" # + Microsoft Presidio recognizers
+# from source (dev): pip install -e ".[dev]"
 ```
 
 ## Quick start
