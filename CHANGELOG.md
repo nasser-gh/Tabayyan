@@ -1,6 +1,12 @@
 # Changelog
 
 ## Unreleased
+- **Playground (demo web UI):** a new `playground/` FastAPI app — a lightweight,
+  fully-offline demo that lets anyone try Tabayyan in the browser (highlighted
+  detections, confidence/category cards, JSON view, redaction preview, synthetic
+  Arabic samples, `.txt` upload, light/dark themes). It's an **external
+  consumer** — imports only the public API, duplicates no logic, and ships
+  separately from the zero-dependency core. No external calls/CDNs/telemetry.
 - **README redesign (UX):** a centered, product-grade header — SVG banner
   (`docs/assets/banner.svg`), centered badges (PyPI/Python/tests/license), an
   emoji nav row, and a one-line metrics strip — followed by a Mermaid pipeline

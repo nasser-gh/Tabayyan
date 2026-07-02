@@ -90,6 +90,22 @@ Built-in, auto-detecting adapters for **OpenAI**, **Azure OpenAI**, and
 provider-agnostic building block (`Guard.protect_messages` / `Guard.wrap`) that
 drops into any stack — **FastAPI**, **LangChain**, batch jobs, or your own SDK.
 
+## Playground (demo web UI)
+
+Try Tabayyan in the browser — paste text, see PII highlighted, classified, and
+redacted — with **zero external calls**. It's a demo that consumes the public
+API only (no core changes):
+
+```bash
+pip install -e . && pip install -r playground/requirements.txt
+uvicorn playground.app:app          # http://127.0.0.1:8000
+```
+
+Two-column editor, per-category highlighting, detection cards, JSON view,
+redaction preview (mask / remove / partial / hash / tokenize), synthetic Arabic
+samples, `.txt` upload, and light/dark themes. See
+[playground/README.md](playground/README.md).
+
 ## Status
 
 Public release (v0.7.2). The pre-1.0 version numbers track development

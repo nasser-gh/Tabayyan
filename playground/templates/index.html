@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Tabayyan Playground · Saudi PII detection & redaction</title>
+  <meta name="description" content="Try Tabayyan — Saudi-first PII detection & redaction — in your browser. Fully offline.">
+  <link rel="stylesheet" href="/static/styles.css">
+  <script>
+    // apply saved theme before paint to avoid a flash
+    (function () {
+      var t = localStorage.getItem("tby-theme");
+      if (t) document.documentElement.setAttribute("data-theme", t);
+    })();
+  </script>
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand">
+      <span class="logo">ت</span>
+      <span>Tabayyan <span class="ar">تبيّن</span> <span class="tag">Playground</span></span>
+    </div>
+    <nav class="topnav">
+      <span class="badge badge-ok" title="No network calls, no telemetry">● Offline</span>
+      <a href="https://github.com/nasser-gh/Tabayyan" target="_blank" rel="noopener">GitHub</a>
+      <a href="https://pypi.org/project/tabayyan/" target="_blank" rel="noopener">PyPI</a>
+      <button id="theme-toggle" class="icon-btn" title="Toggle theme" aria-label="Toggle theme">◐</button>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <h1>Detect &amp; redact Saudi PII — right in your browser</h1>
+    <p class="sub">Checksum-validated National ID, Iqama, IBAN, VAT, mobiles &amp; more. Paste text, click <b>Scan</b>.</p>
+    <div class="chips">
+      <span class="chip"><b>{{ detector_count }}</b> detectors</span>
+      <span class="chip">🔒 Offline-first</span>
+      <span class="chip">🐍 Python {{ python }}</span>
+      <span class="chip">v{{ version }}</span>
+    </div>
+    <pre class="quick"><code>pip install tabayyan
+from tabayyan import scan_and_redact
+scan_and_redact(text, "mask")</code></pre>
+  </section>
+
+  <main class="grid">
+    <!-- LEFT -->
+    <section class="panel" id="left">
+      <div class="toolbar">
+        <span class="toolbar-label">Samples:</span>
+        {% for key, s in samples.items() %}
+        <button class="pill sample-btn" data-key="{{ key }}">{{ s.icon }} {{ s.title }}</button>
+        {% endfor %}
+      </div>
+      <div class="editor-wrap" id="drop">
+        <textarea id="input" placeholder="Paste text here…  (or drag a .txt file, or pick a sample above)"></textarea>
+        <div class="editor-foot">
+          <span id="charcount">0 chars</span>
+          <span class="foot-actions">
+            <label class="link-btn">Upload .txt<input type="file" id="file" accept=".txt,text/plain" hidden></label>
+            <button class="link-btn" id="clear">Clear</button>
+          </span>
+        </div>
+      </div>
+      <div class="actions">
+        <button id="scan" class="btn btn-primary">Scan</button>
+        <div class="redact-group">
+          <button id="redact" class="btn">Redact</button>
+          <select id="mode" title="Redaction mode">
+            {% for m in modes %}<option value="{{ m }}">{{ m }}</option>{% endfor %}
+          </select>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT -->
+    <section class="panel" id="right">
+      <div id="error" class="error" hidden></div>
+
+      <div id="stats" class="stats" hidden>
+        <div class="stat"><b id="s-total">0</b><span>detections</span></div>
+        <div class="stat stat-high"><b id="s-high">0</b><span>HIGH</span></div>
+        <div class="stat stat-med"><b id="s-med">0</b><span>MEDIUM</span></div>
+        <div class="stat stat-low"><b id="s-low">0</b><span>LOW</span></div>
+        <div class="stat"><b id="s-ms">0</b><span>ms</span></div>
+        <div class="stat"><b id="s-chars">0</b><span>chars</span></div>
+        <div class="stat"><b id="s-det">0</b><span>detectors</span></div>
+      </div>
+
+      <div class="tabs" role="tablist">
+        <button class="tab is-active" data-tab="results">Results</button>
+        <button class="tab" data-tab="json">JSON</button>
+        <button class="tab" data-tab="redaction">Redaction</button>
+      </div>
+
+      <div class="tabview" id="tab-results">
+        <div id="empty" class="empty">Results will appear here. Try a sample and click <b>Scan</b>.</div>
+        <div id="highlight" class="highlight" hidden></div>
+        <div id="cards" class="cards"></div>
+      </div>
+
+      <div class="tabview" id="tab-json" hidden>
+        <div class="view-actions"><button class="link-btn" id="copy-json">Copy JSON</button><button class="link-btn" id="dl-json">Download</button></div>
+        <pre class="json"><code id="json">// scan to see the raw API output</code></pre>
+      </div>
+
+      <div class="tabview" id="tab-redaction" hidden>
+        <div class="redact-view">
+          <div>
+            <div class="mini-label">Original</div>
+            <pre class="box"><code id="r-original"></code></pre>
+          </div>
+          <div class="arrow">↓</div>
+          <div>
+            <div class="mini-label">Redacted <span id="r-mode" class="tag"></span></div>
+            <pre class="box box-out"><code id="r-redacted">Choose a mode and click Redact.</code></pre>
+            <div class="view-actions"><button class="link-btn" id="copy-red">Copy</button><button class="link-btn" id="dl-red">Download</button></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <span>Synthetic samples only — never paste real personal data.</span>
+    <span>Powered by <a href="https://pypi.org/project/tabayyan/" target="_blank" rel="noopener">tabayyan</a> · runs 100% locally.</span>
+  </footer>
+
+  <script id="samples" type="application/json">{{ samples|tojson }}</script>
+  <script src="/static/app.js"></script>
+</body>
+</html>
