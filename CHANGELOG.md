@@ -1,6 +1,6 @@
 # Changelog
 
-## Unreleased
+## 0.8.0
 - **Playground (demo web UI):** a new `playground/` FastAPI app — a lightweight,
   fully-offline demo that lets anyone try Tabayyan in the browser (highlighted
   detections, confidence/category cards, JSON view, redaction preview, synthetic
