@@ -1,13 +1,26 @@
-# Tabayyan · تبيّن
+<div align="center">
 
-**Saudi-first PII detection & redaction for LLM pipelines — checksum-validated, Unicode-aware, fully offline.**
+<img src="docs/assets/banner.svg" alt="Tabayyan — Saudi-first PII detection &amp; redaction for LLM pipelines" width="100%">
 
-[![PyPI](https://img.shields.io/pypi/v/tabayyan.svg)](https://pypi.org/project/tabayyan/)
-[![Python](https://img.shields.io/pypi/pyversions/tabayyan.svg)](https://pypi.org/project/tabayyan/)
-[![tests](https://github.com/nasser-gh/tabayyan/actions/workflows/tests.yml/badge.svg)](https://github.com/nasser-gh/tabayyan/actions)
-[![License: Apache-2.0](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](LICENSE)
+<p>
+<a href="https://pypi.org/project/tabayyan/"><img src="https://img.shields.io/pypi/v/tabayyan.svg" alt="PyPI"></a>
+<a href="https://pypi.org/project/tabayyan/"><img src="https://img.shields.io/pypi/pyversions/tabayyan.svg" alt="Python"></a>
+<a href="https://github.com/nasser-gh/tabayyan/actions"><img src="https://github.com/nasser-gh/tabayyan/actions/workflows/tests.yml/badge.svg" alt="tests"></a>
+<a href="LICENSE"><img src="https://img.shields.io/badge/License-Apache_2.0-blue.svg" alt="License: Apache-2.0"></a>
+</p>
 
-**16 detectors** · **240+ tests** (property · golden-regression · contract · fuzz) · **Python 3.9–3.13** · **zero-dependency, offline core**
+<p>
+<b><a href="#install">Install</a></b> ·
+<a href="#quick-start">Quick start</a> ·
+<a href="docs/middleware.md">Middleware &amp; audit</a> ·
+<a href="docs/plugins.md">Plugins</a> ·
+<a href="docs/api-stability.md">API stability</a> ·
+<a href="CHANGELOG.md">Changelog</a>
+</p>
+
+<sub><b>16 detectors</b> · <b>240+ tests</b> (property · golden-regression · contract · fuzz) · <b>Python 3.9–3.13</b> · <b>zero-dependency, offline core</b></sub>
+
+</div>
 
 Generic PII libraries target international identifiers and either miss Saudi ones
 or flag them with no validation. **Tabayyan** adds first-class Saudi & Arabic
@@ -17,6 +30,11 @@ extensible, and production-friendly**.
 ```bash
 pip install tabayyan
 ```
+
+> [!NOTE]
+> A detection **aid**, not a compliance guarantee — deploy it as one layer in a
+> defense-in-depth strategy, with human review for LOW-confidence findings.
+> See [Scope and honest limits](#scope-and-honest-limits).
 
 ## How it works
 
